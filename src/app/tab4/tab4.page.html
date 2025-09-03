@@ -1,0 +1,113 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>My Sessions</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button id="mysessions-trigger">
+        <ion-icon slot="end" name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <ion-popover trigger="mysessions-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+
+      <ion-col size="12">
+        <h1 class="page-title">{{selectedSegment == "upcoming" ? "Upcoming" : "Previous"}} Sessions</h1>
+      </ion-col>
+
+      <!-- <ion-col size="12">
+        <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+          <ion-segment-button value="upcoming">
+            <ion-label>Upcoming</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="previous">
+            <ion-label>Previous</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col> -->
+
+      <ion-col size="12" *ngIf="selectedSegment == 'upcoming' ">
+        <p class="flex-title mt-30">{{ currentDate | date: 'MMMM' }}
+          <ion-buttons>
+            <ion-button class="view-all font-700" (click)="openCalendar(true)">View Calendar</ion-button>
+          </ion-buttons>
+
+        </p>
+        <div class="circle">
+          <div *ngFor="let date of dates; let i = index" class="item-circle"
+            [ngClass]="{ 'active': i === clickedIndex }" (click)="selectDate(date, i)">
+            <ion-text class="box dateSelected" [class.selected]="dateSelected === date.date">{{ date.date }}</ion-text>
+            <ion-text class="day-name">{{ date.day }}</ion-text>
+          </div>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <div class="ion-text-center ion-padding" *ngIf="!ready">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+        <div class="no-found" *ngIf="ready && bookingList.length == 0">
+          <p>There Are No Upcoming Sessions.</p>
+        </div>
+        <ion-list lines="none" class="list-style-1">
+          <ion-item lines="none" detail="true" *ngFor="let item of bookingList" (click)="goToBooking(item)">
+            <ion-label>
+              <h3>{{ item?.booking_date | date: 'MM/dd/yyyy' }} - {{ item?.booking_start_time }} </h3>
+              <p>{{ item?.treatment?.treatment }} - {{ item?.user?.first_name }} {{
+                item?.user?.last_name?.charAt(0).toUpperCase() }}</p>
+              <p>Duration: {{ item?.therapist_duration}} Mins</p>
+              <p>{{ item?.location_details?.location_address }}</p>
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-list lines="none" class="list-style-1">
+          <ion-list-header>
+            <ion-label>History</ion-label>
+            <ion-buttons>
+              <ion-button class="view-all" routerLink='/request-history'>VIEW ALL</ion-button>
+            </ion-buttons>
+          </ion-list-header>
+          <div class="ion-text-center ion-padding" *ngIf="!ready1">
+            <ion-spinner color="light"></ion-spinner>
+          </div>
+          <div class="no-found" *ngIf="ready1 && bookingHistory.length === 0">
+            <p>No Request History Found.</p>
+          </div>
+          <ion-item lines="none" detail="true" *ngFor="let item of bookingHistory" (click)="goToBooking(item)">
+            <ion-label>
+              <h3>{{ item?.booking_date | date: 'MM/dd/yyyy' }} - {{ item?.booking_start_time }} </h3>
+              <p>{{ item?.treatment?.treatment }} - {{ item?.user?.first_name }} {{
+                item?.user?.last_name.charAt(0)?.toUpperCase() }}</p>
+              <p>Duration: {{ item?.therapist_duration}} Mins</p>
+              <p>{{ item?.location_details?.location_address }}</p>
+            </ion-label>
+          </ion-item>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- trigger="open-custom-dialog" -->
+  <ion-modal id="example-modal" #modal [isOpen]="is_modal" [backdropDismiss]="false" (willDismiss)="is_modal = false">
+    <ng-template>
+      <div class="wrapper">
+        <ion-datetime [showDefaultButtons]="true" presentation="date" (ionChange)="onDateSelected($event)" color="light"
+          [min]="minDate" [highlightedDates]="highlightedDates"></ion-datetime>
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

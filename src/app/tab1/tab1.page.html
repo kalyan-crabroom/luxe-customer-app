@@ -1,0 +1,116 @@
+<ion-header>
+  <ion-toolbar class="ion-no-border">
+    <ion-title>Home</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/notifications">
+        <ion-icon name="notifications"></ion-icon>
+        <ion-text *ngIf="totalNotification_count > 0"></ion-text>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <ion-segment value="map" [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+          <ion-segment-button value="map">
+            <ion-label>Map</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="list">
+            <ion-label>List</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+      <ion-col size="12">
+        <div class="flex-toolbar-inner">
+          <ion-item lines="none" class="flex-fill search-item">
+            <ion-searchbar placeholder="Search..." [debounce]="500" (ionInput)="handleInput($event)"></ion-searchbar>
+            <ion-buttons slot="end">
+              <ion-button (click)="filterModal()">
+                <ion-icon src="assets/icons/options-filter.svg"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ion-toggle class="flex-auto" [(ngModel)]="online" labelPlacement="end"
+            (ionChange)="updateLocation($event)">Online</ion-toggle>
+        </div>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid *ngIf="is_map">
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-spinner color="light" name="lines-small"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid class="ion-no-padding fill-screen" *ngIf="selectedSegment === 'map'">
+    <div id="map"></div>
+  </ion-grid>
+
+  <ion-grid [fixed]="true" *ngIf="selectedSegment === 'list'">
+    <ion-list lines="none" class="ion-padding list-style-1">
+      <ion-list-header class="mb-10">
+        <ion-label class="font-23">Newly Posted Requests</ion-label>
+      </ion-list-header>
+      <div class="ion-text-center ion-padding" *ngIf="ready">
+        <ion-spinner color="light"></ion-spinner>
+      </div>
+      <ion-item lines="none" detail="true" *ngFor="let item of requestData" (click)="goToBooking(item)">
+        <ion-label>
+          <h3>
+            {{ item?.booking_date | date: 'MM/dd/yyyy'}} - {{
+            item?.booking_start_time }}
+          </h3>
+          <p>
+            {{ item?.treatment_details?.name }} - {{ item?.user_details?.first_name }} {{ item?.user_details?.last_name?.charAt(0).toUpperCase() }}
+          </p>
+          <p>{{ item?.location_details?.location_address }}</p>
+        </ion-label>
+      </ion-item>
+
+      <div class="no-found" *ngIf="!ready && requestData.length === 0 && selectedSegment === 'list'">
+        <p>No Requests Founds.</p>
+      </div>
+    </ion-list>
+  </ion-grid>
+
+  <div class="banner-container">
+    <div class="main-banner-image">
+      <img src="" alt="">
+      <div class="caption"></div>
+    </div>
+    <div class="bottom-content"></div>
+  </div>
+
+  <ion-modal [isOpen]="isModalOpen" class="modal-center auto-height-modal" [backdropDismiss]="false">
+    <ng-template>
+      <div class="block-content">
+        <div class="main-content-wraper">
+          <div class="header-section">
+            <h3>Background Check</h3>
+          </div>
+          <div class="body-section">
+            <p>{{backgroundCheckData.message}}</p>
+            <h1 class="title-content">Reason:</h1>
+            <p>{{backgroundCheckData.reason}}</p>
+          </div>
+          <div class="footer-section">
+            <ion-button class="primary-btn" (click)="goToBackGroundCheck()">Background
+              Check</ion-button>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

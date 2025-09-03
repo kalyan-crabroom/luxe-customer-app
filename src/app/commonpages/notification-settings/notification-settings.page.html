@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notification Settings</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="notificationSettings" (ngSubmit)="onSubmit(notificationSettings.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row>
+        <ion-col size="12">
+          <h1 class="page-title">Set Miles for Notification</h1>
+        </ion-col>
+        <ion-col size="12">
+          <ion-list>
+            <ion-range aria-label="Temperature" min="0" 
+            max="100" [pin]="true" (ionChange)="onRangeChange($event)" formControlName="distance">
+            <p slot="start" class="range-label">0</p>
+            <p slot="end" class="range-label">100</p>
+            </ion-range>
+            <!-- <ion-range class="bar" aria-label="Range with pin" [pin]="true" [min]="480" [max]="1440" [dualKnobs]="true">
+            </ion-range> -->
+            <!-- <ion-item-group>
+            <ion-item-divider>
+              <ion-item>
+                <ion-toggle  formControlName="all_job_notification">All Job Notifications</ion-toggle>
+              </ion-item>
+            </ion-item-divider>
+          
+            <ion-item>
+              <ion-toggle formControlName="all_jobs_within_25_miles">All Jobs within 25 Miles</ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-toggle  formControlName="all_jobs_in_city">All Jobs in City</ion-toggle>
+            </ion-item>
+          
+          </ion-item-group> -->
+
+            <!-- <ion-item-group>
+            <ion-item-divider>
+              <ion-item>
+                <ion-toggle formControlName="message_notification">Message Notifications</ion-toggle>
+              </ion-item>
+            </ion-item-divider>
+          
+          </ion-item-group> -->
+            <!-- <ion-item-group>
+            <ion-item-divider>
+              <ion-item>
+                <ion-toggle formControlName="all_appointment_reminders">All Appointment Reminders</ion-toggle>
+              </ion-item>
+            </ion-item-divider>
+          
+            <ion-item>
+              <ion-toggle [checked]="true" formControlName="one_to_three_hour_appointment_reminders">1 - 3 Hour Appointment Reminders</ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-toggle formControlName="twelve_hour_appointment_reminders">12 Hour Appointment Reminders</ion-toggle>
+            </ion-item>
+            <ion-item>
+              <ion-toggle  formControlName="twenty_four_hour_appointment_reminders">24 Hour Appointment Reminders</ion-toggle>
+            </ion-item>
+          </ion-item-group> -->
+          </ion-list>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button expand="block" class="primary-btn mt-20" type="submit">Submit</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

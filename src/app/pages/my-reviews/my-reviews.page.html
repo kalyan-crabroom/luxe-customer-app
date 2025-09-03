@@ -1,0 +1,152 @@
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" icon="assets/icons/back-btn-arrow.svg" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My reviews</ion-title>
+
+    <!-- <ion-buttons slot="end">
+      <ion-button id="my-review-trigger">
+        <ion-icon name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="my-review-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+<ion-content>
+  <!--
+  routerLink="/report-review"
+  <ion-refresher  slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher> -->
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="section-title mb-20">Rating</h1>
+        <ion-list lines="none" class="list-style-1">
+          <ion-item>
+            <ion-avatar slot="start">
+              <img [src]="therapistData?.profile_image"  onerror="this.src='/assets/images/user1-image.jpg'"  alt="">
+            </ion-avatar>
+            <ion-label>
+              <h3>{{therapistData?.first_name}} {{therapistData?.last_name?.charAt(0).toUpperCase()}}</h3>
+              <p>
+                <ion-text class="flex-icon">
+                  <ng-container *ngIf="therapistData?.average_rating > 0; else noRating">
+                    <ng-container *ngFor="let s of starBox; let i = index">
+                      <ion-icon name="star" *ngIf="therapistData?.average_rating >= s"></ion-icon>
+                      <ng-container *ngIf="therapistData?.average_rating < s">
+                        <ion-icon name="star-half" *ngIf="therapistData?.average_rating > (s - 1)"></ion-icon>
+                        <ion-icon name="star-outline" class="blank-star"
+                          *ngIf="therapistData?.average_rating <= (s - 1)"></ion-icon>
+                      </ng-container>
+                    </ng-container>
+                    <ion-text> ({{ therapistData?.average_rating }})</ion-text>
+                  </ng-container>
+                  <ng-template #noRating>
+                    <ng-container *ngFor="let s of starBox">
+                      <ion-icon name="star-outline" class="blank-star"></ion-icon>
+                    </ng-container>
+                  </ng-template>
+                </ion-text>
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="section-title mb-10">Compliments</h1>
+        <!-- <div class="ion-text-center ion-padding" *ngIf="!ready1">
+          <ion-spinner color="light"></ion-spinner>
+      </div> -->
+      </ion-col>
+    
+      <ion-col size="6" class="box-height" (click)="fetchReviews('clean')">
+        <ion-card class="compliments-card">
+          <ion-icon src="assets/icons/clean.svg"></ion-icon>
+          <h3>Clean</h3>
+          <p>({{complementsViews.clean}})</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" class="box-height" (click)="fetchReviews('respectful')">
+        <!-- (click)="fetchReviews('respectful')" -->
+        <ion-card class="compliments-card">
+          <ion-icon src="assets/icons/great-technique.svg"></ion-icon>
+          <h3>Respectful</h3>
+          <p>({{complementsViews.respectful}})</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" class="box-height" (click)="fetchReviews('friendly')">
+        <!-- (click)="fetchReviews('friendly')" -->
+        <ion-card class="compliments-card">
+          <ion-icon src="assets/icons/good-communication.svg"></ion-icon>
+          <h3>Friendly</h3>
+          <p> ({{complementsViews.friendly}})</p>
+        </ion-card>
+      </ion-col>
+      <ion-col size="6" class="box-height" (click)="fetchReviews('punctual')">
+        <!-- (click)="fetchReviews('punctual')" -->
+        <ion-card class="compliments-card">
+          <ion-icon src="assets/icons/punctual.svg"></ion-icon>
+          <h3>Punctual</h3>
+          <p>({{complementsViews.punctual}})</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="section-title mb-10 mt-20">Reviews</h1>
+        <ion-list lines="none" class="list-style-1 reviews-list">
+          <div class="ion-text-center ion-padding" *ngIf="!ready">
+            <ion-spinner color="light"></ion-spinner>
+        </div>
+          <!-- <ng-container *ngIf="showSpinner == 2 && reviewsData.length === 0">
+            <ion-col size="12" class="ion-text-center ion-padding">
+              <div class="no-found">No reviews found.</div>
+            </ion-col>
+          </ng-container>  -->
+          <ion-item *ngFor="let item of reviewsData">
+            <ion-text class="star-rating">
+              <ng-container *ngIf="item?.rating > 0; else noRating">
+                <ng-container *ngFor="let s of starBox; let i = index">
+                  <ion-icon name="star" *ngIf="item.rating >= s"></ion-icon>
+                  <ng-container *ngIf="item.rating < s">
+                    <ion-icon name="star-half" *ngIf="item.rating > (s - 1)"></ion-icon>
+                    <ion-icon name="star-outline" class="blank-star" *ngIf="item.rating <= (s - 1)"></ion-icon>
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+              <ng-template #noRating>
+                <ng-container *ngFor="let s of starBox">
+                  <ion-icon name="star-outline" class="blank-star"></ion-icon>
+                </ng-container>
+              </ng-template>
+            </ion-text>
+            <ion-label>
+              <h3>{{item?.to_user?.first_name}} {{item?.to_user?.last_name?.charAt(0).toUpperCase()}}</h3>
+              <p>{{item?.message}}</p>
+              <ion-icon src="assets/icons/flag.svg"></ion-icon>
+            </ion-label>
+          </ion-item>
+          <div *ngIf="ready && reviewsData.length == 0">
+            <p class="no-found">No Reviews Found.</p>
+        </div>
+        </ion-list>
+
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <!-- <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="reviewsData.length < total_reviews">
+    <ion-infinite-scroll-content class="white-spinner"></ion-infinite-scroll-content>
+  </ion-infinite-scroll> -->
+</ion-content>

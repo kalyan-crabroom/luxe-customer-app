@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button routerLink="/tabs/home" (click)="modalClose()">
+        <ion-icon name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Filter</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid class="ion-padding">
+    <ion-row>
+      <ion-col size="12">
+        <p class="section-title mb-15">Radius</p>
+        <ion-item lines="none" class="field relative-item">
+          <ion-select toggleIcon="" placeholder="Select" [(ngModel)]="radius">
+            <ion-select-option value="10">10 miles</ion-select-option>
+            <ion-select-option value="20">20 miles</ion-select-option>
+            <ion-select-option value="30">30 miles</ion-select-option>
+            <ion-select-option value="40">40 miles</ion-select-option>
+            <ion-select-option value="50">50 miles</ion-select-option>
+            <ion-select-option value="60">60 miles</ion-select-option>
+            <ion-select-option value="70">70 miles</ion-select-option>
+            <ion-select-option value="80">80 miles</ion-select-option>
+            <ion-select-option value="90">90 miles</ion-select-option>
+            <ion-select-option value="100">100 miles</ion-select-option>
+          </ion-select>
+          <ion-icon class="icon-right" name="caret-down-outline"></ion-icon>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12">
+        <p class="section-title mb-15">Massage Types</p>
+        <div class="ion-text-center" *ngIf="is_treatment">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+
+        <ion-list lines="none" class="checkbox-list" *ngIf="!is_treatment">
+          <ion-item class="ion-no-padding" *ngFor="let item of treatmentData">
+            <ion-checkbox class="checkbox-custom" [checked]="item.checked" mode="md" labelPlacement="end" justify="start"
+              (ionChange)="selectCheckbox(item)">{{item.treatment}}</ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <ion-col size="12">
+
+        <p class="section-title mb-15">Gender</p>
+        <ion-item lines="none" class="field relative-item">
+          <ion-select toggleIcon="" placeholder="Select gender" [(ngModel)]="gender">
+            <ion-select-option value="any">Any</ion-select-option>
+            <ion-select-option value="male">Male</ion-select-option>
+            <ion-select-option value="female">Female</ion-select-option>
+          </ion-select>
+          <ion-icon class="icon-right" name="caret-down-outline"></ion-icon>
+        </ion-item>
+
+      </ion-col>
+
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <ion-col size="12">
+        <ion-button class="primary-btn" expand="block" (click)="applyFilter()">Apply Filters</ion-button>
+      </ion-col>
+      <ion-col size="12">
+        <ion-button class="primary-btn-outline" expand="block" (click)="clear()">Clear</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

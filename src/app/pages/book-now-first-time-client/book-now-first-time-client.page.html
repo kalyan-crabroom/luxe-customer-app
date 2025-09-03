@@ -1,0 +1,112 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Book Now</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon slot="end" name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="bookFirstTime">
+    <ion-grid class="ion-padding"  [fixed]="true">
+      <ion-row>
+        <ion-col size="12">
+          <h1 class="section-title">Choose a Treatment</h1>
+          <ion-item lines="none" class="field relative-item">
+            <ion-select placeholder="Select Treatment" toggleIcon="" formControlName="treatment">
+              <ion-select-option>treatment-1</ion-select-option>
+              <ion-select-option>treatment-2</ion-select-option>
+              <ion-select-option>treatment-3</ion-select-option>
+            </ion-select>
+            <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.treatment">
+            <p class="err"
+              *ngIf="bookFirstTime.get('treatment')?.hasError(validation.type) && (bookFirstTime.get('treatment')?.dirty || bookFirstTime.get('treatment')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <h1 class="section-title">Therapist Gender</h1>
+          <ion-radio-group formControlName="therapistGender">
+            <ion-radio value="Any">Any</ion-radio>
+            <ion-radio value="Female">Female</ion-radio>
+            <ion-radio value="Male">Male</ion-radio>
+          </ion-radio-group>
+          <ng-container *ngFor="let validation of validation_messages.therapistGender">
+            <p class="err"
+              *ngIf="bookFirstTime.get('therapistGender')?.hasError(validation.type) && (bookFirstTime.get('therapistGender')?.dirty || bookFirstTime.get('therapistGender')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="ion-no-padding checkbox-item">
+            <ion-checkbox class="checkbox-custom" slot="start" mode="md"></ion-checkbox>
+            <ion-label>
+              <h3>Book back-to-back if only one therapist is
+                available.</h3>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <h1 class="section-title">Choose a Duration</h1>
+          <ion-radio-group formControlName="duration">
+            <ion-radio value="60Mins">60 Mins</ion-radio>
+            <ion-radio value="75Mins">75 Mins</ion-radio>
+            <ion-radio value="90Mins">90 Mins</ion-radio>
+            <ion-radio value="120Mins">120 Mins</ion-radio>
+          </ion-radio-group>
+          <ng-container *ngFor="let validation of validation_messages.duration">
+            <p class="err"
+              *ngIf="bookFirstTime.get('duration')?.hasError(validation.type) && (bookFirstTime.get('duration')?.dirty || bookFirstTime.get('duration')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <h1 class="section-title">This message is for</h1>
+          <ion-item lines="none" class="field relative-item">
+            <ion-select formControlName="messageFor" placeholder="Myself / Guest" toggleIcon="">
+              <ion-select-option value="Myself">Myself</ion-select-option>
+              <ion-select-option value="Guest">Guest</ion-select-option>
+
+            </ion-select>
+            <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.messageFor">
+            <p class="err"
+              *ngIf="bookFirstTime.get('messageFor')?.hasError(validation.type) && (bookFirstTime.get('messageFor')?.dirty || bookFirstTime.get('messageFor')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <h1 class="section-title">Add Notes for Therapist</h1>
+          <ion-item lines="none" class="field rounded-25">
+            <ion-textarea rows="10" placeholder="Type notes here..." formControlName="notes"></ion-textarea>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.notes">
+            <p class="err"
+              *ngIf="bookFirstTime.get('notes')?.hasError(validation.type) && (bookFirstTime.get('notes')?.dirty || bookFirstTime.get('notes')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button expand="block" class="primary-btn" type="submit"
+            (click)="onSubmit(bookFirstTime.value)" [disabled]="bookFirstTime.invalid">NEXT</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

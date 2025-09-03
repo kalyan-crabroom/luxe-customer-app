@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "669095162229",
+    "project_id": "luxe-touch",
+    "storage_bucket": "luxe-touch.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:669095162229:android:3f71c05b918ab6fc0b233c",
+        "android_client_info": {
+          "package_name": "io.deeplycalm.therapist.knoxweb"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBf-2fzb-3hslq_Vt8Av0tSTENBuGiKYIE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

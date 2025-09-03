@@ -1,0 +1,32 @@
+<ion-content>
+  <div class="bg-card">
+    <ion-grid class="ion-padding-horizontal" [fixed]="true">
+      <ion-row>
+        <ion-col size="12">
+          <div class="contentContainer">
+            <div class="mb-100">
+              <h2 class="mt-0 mb-0 font-23">Welcome, {{user_detail?.first_name}}!</h2>
+            </div>
+  
+            <p class="font-13 mt-15 mb-0">We're excited you've decided to join the Luxe Touch community of independent massage therapists!
+             
+            </p>
+            <p class="font-13 mt-15 mb-0">
+              It's a 3-Step Onboarding Process.
+            </p>
+          </div>
+         
+
+          <!-- <ion-button expand="block" class="primary-btn mt-15" (click)="openOnboardLink()">TOUCH TO ONBOARD</ion-button> -->
+          <ion-button expand="block" class="primary-btn mt-15" (click)="continueSignup()">CONTINUE</ion-button>
+
+
+          <!-- <ion-button expand="block" class="primary-btn mt-15" (click)="continueSignup()">CONTINUE SIGN UP</ion-button> -->
+
+        </ion-col>
+
+
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

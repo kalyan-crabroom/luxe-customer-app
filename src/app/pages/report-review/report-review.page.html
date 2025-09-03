@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Report Review</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+    <ion-grid class="ion-padding"  [fixed]="true">
+      <ion-row>
+        <ion-col size="12" class="ion-text-center">
+          <img class="logo" src="assets/logo/luxe-touch-logo-01.png" alt="">
+        </ion-col>
+
+        <ion-col size="12">
+          <p class="para-1">Lorem ipsum dolor sit amet consectetur. Purus ultrices
+            vestibulum tincidunt sit amet. Phasellus sapien ut mattis ipsum viverra enim ut
+            egestas at. Nunc ornare sit in.</p>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-icon name="mail" slot="start"></ion-icon>
+            <ion-input placeholder="Enter Email Address"></ion-input>
+          </ion-item>
+        
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-icon name="call" slot="start"></ion-icon>
+            <ion-input placeholder="Enter Phone Number"></ion-input>
+          </ion-item>
+         
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="field rounded-25">
+            <ion-textarea class="message" rows="10" placeholder="Type your message here..."></ion-textarea>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button expand="block" class="primary-btn" type="submit">Sumbit</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>

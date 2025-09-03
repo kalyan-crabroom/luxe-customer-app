@@ -1,0 +1,253 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/edit-profile">
+        <ion-icon src="assets/icons/edit.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+
+    <ion-row *ngIf="is_ready">
+      <ion-col size="12" class="ion-text-center">
+        <ion-spinner color="light"></ion-spinner>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!is_ready">
+
+      <ion-col size="12" class="ion-text-center">
+        <ion-avatar class="profile-img relative">
+          <img alt="" [src]="user_data.profile_image" onerror="this.src='/assets/images/user1-image.jpg'" />
+          <!-- <ion-icon class="gender-icon" src="assets/icons/female.svg"></ion-icon> -->
+          <ion-icon *ngIf="user_data?.gender" class="gender-icon" [ngStyle]="{
+            'transform': user_data.gender === 'Male' ? 'rotate(218deg)' : 'rotate(0deg)',
+            'transition': 'transform 0.3s ease'
+          }" src="assets/icons/female.svg">
+          </ion-icon>
+        </ion-avatar>
+        <h4 class="user-name">{{user_data?.first_name}} {{user_data?.last_name?.charAt(0).toUpperCase() }}</h4>
+        <div class="rating" (click)="goToReviews()">
+          <ng-container *ngIf="user_data.average_rating > 0; else noRating">
+            <ng-container *ngFor="let s of starBox; let i = index">
+              <ion-icon name="star" *ngIf="user_data.average_rating >= s"></ion-icon>
+              <ng-container *ngIf="user_data.average_rating < s">
+                <ion-icon name="star-half" *ngIf="user_data.average_rating > (s - 1)"></ion-icon>
+                <ion-icon name="star-outline" class="blank-star" *ngIf="user_data.average_rating <= (s - 1)"></ion-icon>
+              </ng-container>
+            </ng-container>
+            <ion-text> ({{ user_data.average_rating }})</ion-text>
+          </ng-container>
+
+          <ng-template #noRating>
+            <ng-container *ngFor="let s of starBox">
+              <ion-icon name="star-outline" class="blank-star"></ion-icon>
+            </ng-container>
+          </ng-template>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="user_data?.about_me">
+        <h3 class="section-title">About Me</h3>
+        <ion-card>
+          <p class="text-light">{{user_data?.about_me}}
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="user_data?.zip_code">
+        <h3 class="section-title">ZIP Code</h3>
+        <ion-card>
+          <p class="text-light">{{user_data?.zip_code}}
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="user_data?.gender">
+        <h3 class="section-title">Gender</h3>
+        <ion-card>
+          <p class="text-light">{{user_data?.gender}}
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12">
+        <h3 class="section-title mt-15">Specialties</h3>
+        <ion-card class="mb-15" *ngFor="let item of user_data.specialities;let i=index">
+          <div class="card-content">
+            <p class="text-white">{{item?.title}}</p>
+            <!-- <div class="icon-container">
+              <ion-icon src="assets/icons/edit.svg" class="icon" color="light" (click)="goToEdit(item)"></ion-icon>
+              <ion-icon src="assets/icons/delete.svg" class="icon" color="light" (click)="goToDelete(item,i)"></ion-icon>
+            </div> -->
+          </div>
+        </ion-card>
+
+        <p class="no-found" *ngIf="user_data?.specialities?.length == 0 || !user_data?.specialities">Not
+          Found</p>
+      </ion-col>
+
+      <!-- <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn" routerLink="/add-licensure-and-credentials">Add Licensure &
+          Credentials</ion-button>
+      </ion-col> -->
+
+      <ion-col size="12">
+        <h3 class="section-title mt-10" *ngIf="equipmentList">Equipment</h3>
+        <ion-card class="mb-15" *ngFor="let item of equipmentList">
+          <p class="text-white">{{item}}</p>
+        </ion-card>
+        <p *ngIf="equipmentList?.length == 0" class="no-found">No Equipment Found</p>
+      </ion-col>
+
+      <ion-col size="12">
+        <h3 class="section-title">Gallery</h3>
+        <div class="user-thumbnail">
+          <div class="col-custom">
+            <div class="user-thumbnail-col">
+              <div class="thumbnail-custom">
+                <ion-text (click)="presentActionSheet()">
+                  <ion-icon name="camera"></ion-icon>
+                  <p>Add Gallery</p>
+                </ion-text>
+              </div>
+            </div>
+          </div>
+          <input type="file" (change)="onFileSelected($event)" #fileInput accept="video/*" [hidden]="true" style="display: none;" />
+
+          <div class="col-custom" *ngFor="let item of user_data.gallery_images;let i=index">
+            <div class="user-thumbnail-col">
+              <div class="thumbnail-custom">
+                <!-- Conditionally render image or video thumbnail -->
+                <ng-container *ngIf="item.type === 'image'">
+                  <img alt="" class="pic" [src]="item.media" (click)="openMediaModal(item.media, 'image')" />
+                </ng-container>
+                <ng-container *ngIf="item.type === 'video'">
+                  <div class="video-thumbnail">
+                    <!-- <video #video controls class="thumbnail-pic" (click)="openMediaModal(item.media, 'video')">
+                      <source [src]="item.media" type="video/mp4">
+                    </video> -->
+                    <img alt="" class="thumbnail-pic" [src]="item.thumbnail"
+                      (click)="openMediaModal(item.thumbnail, 'video')" />
+                    <ion-icon name="play-circle" (click)="openMediaModal(item.media, 'video')"
+                      class="play-icon"></ion-icon>
+                  </div>
+                </ng-container>
+                <ion-icon class="trash" name="trash-outline" (click)="deleteGalaryImage(item,i)"></ion-icon>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-col>
+      <ion-col size="12">
+        <ion-list class="list-style">
+          <ion-list-header class="ion-padding-vertical ion-no-padding">
+            <ion-label class="ion-no-margin">Completed Appointments</ion-label>
+            <ion-button class="ion-no-margin view-all" routerLink="/completed-appointments">VIEW
+              ALL</ion-button>
+          </ion-list-header>
+          <div class="ion-text-center ion-padding" *ngIf="!ready">
+            <ion-spinner color="light"></ion-spinner>
+          </div>
+
+          <ion-item lines="none" detail="false" *ngFor="let item of completedBooking" (click)="goToBooking(item)">
+            <ion-label *ngIf="item?.payment_detail_therapist">
+              <h2 class="">
+                {{item?.treatment?.treatment}}
+              </h2>
+              <p class="detail-text">
+                <!-- {{ item.payment_detail_therapist[0]?.transaction_id}} -->
+                <ion-icon name="location"></ion-icon>{{item?.location_details?.location_address}}
+              </p>
+            </ion-label>
+            <ion-text class="text-right" slot="end">
+              <ion-text
+              class="price-text">
+              {{ item?.booking_date | date: 'MM/dd/yyyy' }}
+            </ion-text>
+              <h3>{{ item.payment_detail_therapist[0]?.total_amount ?
+                (item.payment_detail_therapist[0]?.total_amount | currency) : 0 | currency }} </h3>
+             
+            </ion-text>
+            
+          </ion-item>
+          <div class="no-found" *ngIf="ready && completedBooking?.length === 0">
+            <p>No Appointments Found</p>
+          </div>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="end">
+            <ion-button (click)="setOpen(false)">
+              <ion-icon name="close"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-no-padding">
+        <swiper-container
+        [loop]="false"
+        [pagination]="true" 
+        [spaceBetween]="0"
+        [slidesPerView]="1"
+        [initialSlide]="currentSlideIndex"
+      >
+          <swiper-slide  *ngFor="let item of user_data.gallery_images">
+            <ng-container *ngIf="item.type === 'image'">
+              <img [src]="item.media" class="videoBg" />
+            </ng-container>
+            <ng-container *ngIf="item.type === 'video'">
+              <video controls class="videoBg" webkit-playsinline playsinline [poster]="item.thumbnail"  >
+                <source [src]="item.media" type="video/mp4" />
+              </video>
+            </ng-container>
+          </swiper-slide>
+        </swiper-container>
+   
+      </ion-content>
+    </ng-template>
+  </ion-modal> -->
+
+  <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="media-modal">
+    <ng-template>
+
+      <div class="modal-container">
+        <ion-button class="close-modal-btn" (click)="setOpen(false)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        <div class="modal-body">
+          <swiper-container class="media-modal-slider" [loop]="false" [pagination]="true" [spaceBetween]="0"
+            [slidesPerView]="1" [navigation]="true" pagination-type="fraction" [initialSlide]="currentSlideIndex">
+            <swiper-slide *ngFor="let item of user_data.gallery_images">
+              <ng-container *ngIf="item.type === 'image'">
+                <div class="media-container image-post">
+                  <img [src]="item.media" />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.type === 'video'">
+                <div class="media-container video-post">
+                  <video controls webkit-playsinline playsinline [poster]="item.thumbnail">
+                    <source [src]="item.media" type="video/mp4" />
+                  </video>
+                </div>
+
+              </ng-container>
+            </swiper-slide>
+          </swiper-container>
+        </div>
+
+
+      </div>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,0 +1,104 @@
+ion-list{
+    background: transparent;
+    ion-item{
+        --background:var(--bg-rgb);
+        --background-hover:var(--bg-rgb);
+        --background-activated:var(--bg-rgb);
+        --background-focused:var(--bg-rgb);
+        --border-style:solid;
+        --border-width:1px;
+        --border-color:var(--border-rgb);
+        --border-radius: 12px;
+        --padding-start:16px;
+        --padding-end:6px;
+        --inner-padding-end:0;
+        --padding-top:16px;
+        --padding-bottom:16px;
+        position: relative;
+        margin-bottom: 15px;
+        ion-avatar{
+            height: 60px;
+            width: 60px;
+        }
+        ion-label{
+            margin-top: 0;
+            margin-bottom: 0;
+            h3{
+                font-size: 13px;
+                font-family: M-Regular;
+                max-width: calc(100% - 70px);
+                color: var(--ion-color-medium-light);
+                margin-bottom: 12px;
+            }
+            p{
+                font-size: 13px;
+                font-family: M-Regular;
+                color: var(--ion-color-medium-light);
+            }
+        }
+
+        .time{
+            font-size: 12px;
+            font-family: M-Regular !important;
+            color: var(--ion-color-medium-light);
+            position: absolute;
+            right: 6px;
+            top: 3px;
+        }
+    }
+}
+
+.unread-msg{
+    ion-label{
+     
+        h3{
+          
+            font-family: M-Medium !important;
+          
+            color: var(--ion-color-white) !important;
+          
+        }
+        p{
+           
+            font-family: M-Medium !important;
+            color: var(--ion-color-white) !important;
+        }
+    }
+
+    .time{
+       
+        font-family: M-Medium !important;
+        color: var(--ion-color-white) !important;
+       
+    }
+}
+
+.empty_section {
+    margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.empty_section p {
+    color: #fff;
+}
+
+.unread_msg_count {
+    margin: 10px;
+    margin-top: 25px;
+    --padding-end: 3px;
+    --padding-start: 3px;
+    min-width: 20px;
+    min-height: 20px;
+    text-align: center;
+    --border-radius: 30px;
+    --background:var(--ion-color-secondary);
+    background:var(--ion-color-secondary);
+    color: gold;
+    font-size: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,0 +1,9 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+	<title>pdf (2)</title>
+	<defs>
+		<image  width="30" height="32" id="img1" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAgCAMAAAAynjhNAAAAAXNSR0IB2cksfwAAAYlQTFRFAAAA////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////VkzjgAAAAIN0Uk5TACba7vyjBnh875uxfnIBlbYHAgUavozld9Jkluw4s5Q7zeFxf9CvxATiwGxMtN8TbuloZUBh/dvguZnzyLyi4/90GzHUfaYSqPX+nI3TYqVqX1EL7c4eg3BSi1ofhVcPVHZ6gPCd0a6aXL8/2aHCRG/xQTAoWxBDYIFzCKzWIWd5JSS+tH0+AAABbUlEQVR4nGNkYGBgZGRkQAdAsV8gCojZGX9gSHMyMv7+BZHmYfyMKc0K1P8et/R3PpA8bmkGoR+MHGjSIoyMr8AMcaDEe6HPaNJSjIxPwAzZ30CCjRFNWoGR8R7CBmV0aQZVxlv4pOU5Xr/DLa0B9M1V3NI6jM+lPj3AKS0qzswIAnffY5HW4GWEgUMY0nyywEBh3MfA4Mz4m203hrSyGCPPLogx7jthdguaA7VsBXF8bqs9usiADIDSfoyH7RjXgziCjoxrGdClVbQPv2PAAUDSrNrrUQWDGFchSf+/i6YnnHEFqnQkI+NZE6ALF5o88VjAkMg4D1VaS+ql2UEHRsa1IYyM0zGls1Z/tz+oc0Igeo/jkSuY0h4qjMt/gKSZf7FPxJRO5p3AwJH5feOvEO4+BkzpYsYehjBeIcau8gs70aQrjl34hOqxSsY2hHQ1Yzuav6sYmxDSuAIUIV3B3ohdmqMCJN3YiMOMTDEAFwJ1nSxh450AAAAASUVORK5CYII="/>
+	</defs>
+	<style>
+	</style>
+	<use id="Background" href="#img1" x="1" y="0"/>
+</svg>

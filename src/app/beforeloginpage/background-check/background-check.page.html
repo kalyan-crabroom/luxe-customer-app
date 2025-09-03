@@ -1,0 +1,188 @@
+<ion-header>
+  <ion-toolbar>
+    <!-- <ion-title>Background Check</ion-title> -->
+    <ion-title>Provider Enrollment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="backgroundCheckForm" (ngSubmit)="onSubmit(backgroundCheckForm.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+
+      <ion-row>
+        <ion-col size="12">
+          <h1 class="page-title mb-20">Upload Credentials</h1>
+        </ion-col>
+        <ion-col size="12">
+          <p class="filed-label">Upload Drivers License Picture<span class="required">*</span></p>
+          <div class="upload-box">
+            <div class="col-grid">
+              <div class="upload-doc">
+                <ion-icon *ngIf="document_file_front" class="close" name="close-circle"
+                  (click)="removeImage('license_front')"></ion-icon>
+                <!-- <ion-icon *ngIf="document_file" class="close" name="close-circle"
+                  (click)="deleteCertificate()"></ion-icon> -->
+
+                <img [src]="document_file_front"
+                  *ngIf="document_file_front && (file_extension_front == 'jpeg' || file_extension_front == 'png' || file_extension_front == 'jpg')" />
+                <img src="/assets/word.svg" class="doc"
+                  *ngIf="document_file_front && (file_extension_front == 'docx' || file_extension_front == 'doc')" />
+
+                <img src="/assets/pdf.svg" class="doc" *ngIf="document_file_front && file_extension_front == 'pdf'" />
+                <ion-text (click)="presentActionSheet('license_front')">
+                  <ion-icon *ngIf="!document_file_front" name="camera"></ion-icon>
+                  <p *ngIf="!document_file_front">Front</p>
+                </ion-text>
+              </div>
+            </div>
+            <div class="col-grid">
+              <div class="upload-doc">
+
+                <ion-icon *ngIf="document_file_back" class="close" name="close-circle"
+                  (click)="removeImage('license_back')"></ion-icon>
+
+                <img [src]="document_file_back"
+                  *ngIf="document_file_back && (file_extension_back == 'jpeg' || file_extension_back == 'png' || file_extension_back == 'jpg')" />
+
+                <img src="/assets/word.svg" class="doc"
+                  *ngIf="document_file_back && (file_extension_back == 'docx' || file_extension_back == 'doc')" />
+
+                <img src="/assets/pdf.svg" class="doc" *ngIf="document_file_back && file_extension_back == 'pdf'" />
+                <ion-text (click)="presentActionSheet('license_back')">
+                  <ion-icon *ngIf="!document_file_back" name="camera"></ion-icon>
+                  <p *ngIf="!document_file_back">Back</p>
+                </ion-text>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+
+        <!-- <ion-col size="12">
+          <p class="filed-label">Social Security Number<span class="required">*</span></p>
+          <ion-item lines="none" class="field mb-20">
+            <ion-icon name="shield" slot="start"></ion-icon>
+            <ion-input [type]="passwordType" placeholder="XXX-XXX-XXX" maxlength="9"
+              formControlName="SocialSecurityNumber" inputmode="numeric" pattern="[0-9]*"></ion-input>
+            <ion-icon [name]="passwordIcon" (click)="hideShowPassword()" slot="end" class="eye"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.SocialSecurityNumber">
+            <p class="err" *ngIf="backgroundCheckForm.get('SocialSecurityNumber')?.hasError(validation.type) && 
+                     (backgroundCheckForm.get('SocialSecurityNumber')?.dirty || 
+                      backgroundCheckForm.get('SocialSecurityNumber')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </p>
+          </ng-container>
+        </ion-col> -->
+
+        <ion-col size="12">
+          <p class="filed-label">Gender <span class="required">*</span></p>
+          <ion-radio-group value="strawberries" mode="md" formControlName="gender">
+            <ion-radio labelPlacement="end" value="Female">Female</ion-radio><br />
+            <ion-radio labelPlacement="end" value="Male">Male</ion-radio><br />
+            <ion-radio labelPlacement="end" value="Non-Binary">Non-Binary</ion-radio><br />
+            <ion-radio labelPlacement="end" value="Prefer Not to Say">Prefer Not to Say</ion-radio><br />
+          </ion-radio-group>
+          <ng-container *ngFor="let validation of validation_messages.gender">
+            <p class="err"
+              *ngIf="backgroundCheckForm.get('gender')?.hasError(validation.type) && (backgroundCheckForm.get('gender')?.dirty || backgroundCheckForm.get('gender')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <p class="filed-label">Upload Document of Massage Certification<span class="required">*</span></p>
+          <div class="upload-box">
+            <div class="col-grid custom-width">
+              <div class="upload-doc">
+                <ion-icon *ngIf="document_file_certification" class="close" name="close-circle"
+                  (click)="removeImage('massage_certification')"></ion-icon>
+                <img [src]="document_file_certification"
+                  *ngIf="document_file_certification && (file_extension_certification == 'jpeg' || file_extension_certification == 'png' || file_extension_certification == 'jpg')" />
+
+                <img src="/assets/word.svg" class="doc"
+                  *ngIf="document_file_certification && (file_extension_certification == 'docx' || file_extension_certification == 'doc')" />
+
+                <img src="/assets/pdf.svg" class="doc"
+                  *ngIf="document_file_certification && file_extension_certification == 'pdf'" />
+
+                <ion-text (click)="presentActionSheet('massage_certification')">
+                  <ion-icon *ngIf="!document_file_certification" name="camera"></ion-icon>
+                  <p *ngIf="!document_file_certification">Document</p>
+
+                </ion-text>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-md="4">
+          <p class="filed-label">Upload Proof of Massage Insurance<span class="required">*</span></p>
+          <div class="upload-box">
+            <div class="col-grid custom-width">
+              <div class="upload-doc">
+                <ion-icon *ngIf="document_file_insurance" class="close" name="close-circle"
+                  (click)="removeImage('massage_insurance')"></ion-icon>
+                <img [src]="document_file_insurance"
+                  *ngIf="document_file_insurance && (file_extension_insurance == 'jpeg' || file_extension_insurance == 'png' || file_extension_insurance == 'jpg')" />
+
+                <img src="/assets/word.svg" class="doc"
+                  *ngIf="document_file_insurance && (file_extension_insurance == 'docx' || file_extension_insurance == 'doc')" />
+
+                <img src="/assets/pdf.svg" class="doc"
+                  *ngIf="document_file_insurance && file_extension_insurance == 'pdf'" />
+                <ion-text (click)="presentActionSheet('massage_insurance')">
+                  <ion-icon *ngIf="!document_file_insurance" name="camera"></ion-icon>
+                  <p *ngIf="!document_file_insurance">Document</p>
+                  <p *ngIf="uploadInProgress && 'massage_insurance' == uploadingFileType">{{uploadProgress}}%</p>
+                </ion-text>
+              </div>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12">
+          <p class="filed-label">Do you agree to having a background check? <span class="required">*</span></p>
+          <ion-radio-group value="strawberries" mode="md" formControlName="BackgroundCheck">
+            <ion-radio labelPlacement="end" value="yes">Yes</ion-radio><br />
+            <ion-radio labelPlacement="end" value="no">No</ion-radio><br />
+          </ion-radio-group>
+          <ng-container *ngFor="let validation of validation_messages.BackgroundCheck">
+            <p class="err"
+              *ngIf="backgroundCheckForm.get('BackgroundCheck')?.hasError(validation.type) && (backgroundCheckForm.get('BackgroundCheck')?.dirty || backgroundCheckForm.get('BackgroundCheck')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button type="submit" expand="block" class="primary-btn mt-20"
+            [disabled]="!backgroundCheckForm.valid">SUBMIT</ion-button>
+
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <ion-modal [isOpen]="isModalOpen" class="modal-center" [backdropDismiss]="false">
+    <ng-template>
+      <ion-content>
+        <ion-grid class="flex-grid-modal">
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon src="assets/icons/pop-up.svg"></ion-icon>
+              <h1>Thank You</h1>
+              <h1>Step 1 Completed!</h1>
+              <p>{{responseMessage}}</p>
+              <ion-button expand="block" class="primary-btn" (click)="goToLogin()">CONTINUE</ion-button>
+              <!-- <ion-button expand="block" class="primary-btn" (click)="goToLogin()">ok</ion-button> -->
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
