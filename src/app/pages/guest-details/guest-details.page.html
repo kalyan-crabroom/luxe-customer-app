@@ -1,0 +1,212 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Guest Details</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button id="guest-details-help-trigger" *ngIf="helptext">
+        <ion-icon name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="guest-details-help-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content #content>
+  <form [formGroup]="guestDetailForm" (ngSubmit)="onSubmit()">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row formArrayName="guest_details">
+
+        <ng-container *ngFor="let guest of guest_details.controls; let i=index" [formGroupName]="i">
+          <ng-container *ngIf="newGuestIndex == i">
+            <ion-col size="12">
+              <p class="filed-label">Guest No. {{i+1}} Details <span class="required">*</span></p>
+              <ion-item lines="none" class="field">
+                <ion-icon name="person-circle" slot="start"></ion-icon>
+                <ion-input type="text" placeholder="Enter First Name" formControlName="first_name"
+                  appCapitalizeFirst></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validation_messages.first_name">
+                <p class="err"
+                  *ngIf="guest.get('first_name')?.hasError(validation.type) && (guest.get('first_name')?.dirty || guest.get('first_name')?.touched)">
+                  <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+                </p>
+              </ng-container>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-item lines="none" class="field">
+                <ion-icon name="person-circle" slot="start"></ion-icon>
+                <ion-input type="text" placeholder="Enter Last Name" formControlName="last_name"
+                  appCapitalizeFirst></ion-input>
+              </ion-item>
+              <ng-container *ngFor="let validation of validation_messages.last_name">
+                <p class="err"
+                  *ngIf="guest.get('last_name')?.hasError(validation.type) && (guest.get('last_name')?.dirty || guest.get('last_name')?.touched)">
+                  <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+                </p>
+              </ng-container>
+            </ion-col>
+
+            <ion-col size="12">
+              <p class="filed-label">How does this guest identify?<span class="required">*</span></p>
+              <ion-radio-group formControlName="guestIdentity">
+                <ion-radio value="Female">Female</ion-radio>
+                <ion-radio value="Male">Male</ion-radio>
+                <ion-radio value="Rather Not Say">Rather Not Say</ion-radio>
+              </ion-radio-group>
+
+
+              <ng-container *ngFor="let validation of validation_messages.guestIdentity">
+                <p class="err"
+                  *ngIf="guest.get('guestIdentity')?.hasError(validation.type) && (guest.get('guestIdentity')?.dirty || guest.get('guestIdentity')?.touched)">
+                  <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+                </p>
+              </ng-container>
+            </ion-col>
+
+            <ion-col size="12">
+              <ion-checkbox labelPlacement="end" justify="start" class="checkbox-custom ion-text-wrap"
+                formControlName="is_minor">
+                Guest is a minor under the age of 18.
+                A parent must be in the room during the appointment.
+              </ion-checkbox>
+            </ion-col>
+
+            <ion-col size="12">
+              <p class="filed-label">Choose a Massage Type</p>
+              <ion-item lines="none" class="field relative-item" (click)="openTreatmentModal(i)">
+                <ion-label *ngIf="!guestDetailForm.get(['guest_details', i, 'selectedTreatment'])?.value"
+                  class="head-1"> Select a Massage Type</ion-label>
+
+                <ion-label *ngIf="guestDetailForm.get(['guest_details', i, 'selectedTreatment'])?.value" class="head-1">
+                  {{ guestDetailForm.get(['guest_details', i, 'selectedTreatment'])?.value?.treatment }}
+                </ion-label>
+
+                <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12" *ngIf="guestDetailForm.get(['guest_details', i, 'selectedTreatment'])?.value">
+              <p class="filed-label">Choose a Duration</p>
+              <!-- <h1 class="filed-label">Choose a Duration<span class="required">*</span></h1> -->
+              <ion-radio-group formControlName="therapist_duration" (ionChange)="updateDuraionPrice($event,i)">
+                <ion-radio
+                  *ngFor="let priceDuration of guestDetailForm.get(['guest_details', i, 'selectedTreatment'])?.value?.price_and_durations"
+                  [value]="priceDuration.duration">
+                  {{ priceDuration.duration }} Mins
+                </ion-radio>
+              </ion-radio-group>
+            </ion-col>
+
+            <ion-col size="12" *ngIf="guestDetailForm.get(['guest_details', i, 'price'])?.value">
+              <h1 class="filed-label">PRICE: ${{ guestDetailForm.get(['guest_details', i, 'price'])?.value }}</h1>
+            </ion-col>
+
+
+            <ion-col size="12">
+              <p class="filed-label">Therapist Gender Preference<span class="required">*</span></p>
+              <!-- <ion-item lines="none" class="field relative-item">
+                <ion-select toggleIcon="" placeholder="Select Therapist Gender" formControlName="therapist_gender">
+                  <ion-select-option value="Female">Female</ion-select-option>
+                  <ion-select-option value="Male">Male</ion-select-option>
+                  <ion-select-option value="Female or Male" >Female or Male</ion-select-option>
+                </ion-select>
+                <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+              </ion-item> -->
+              <ion-radio-group formControlName="therapist_gender">
+                <ion-radio value="Female">Female</ion-radio>
+                <ion-radio value="Male">Male</ion-radio>
+                <ion-radio value="Female or Male">Female or Male</ion-radio>
+              </ion-radio-group>
+
+              <ng-container *ngFor="let validation of validation_messages.therapist_gender">
+                <p class="err"
+                  *ngIf="guest.get('therapist_gender')?.hasError(validation.type) && (guest.get('therapist_gender')?.dirty || guest.get('therapist_gender')?.touched)">
+                  <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+                </p>
+              </ng-container>
+
+              <ion-item lines="none" class="ion-no-padding checkbox-item"
+                *ngIf="guestDetailForm.get(['guest_details', i, 'therapist_gender'])?.value == 'Male'">
+                <ion-checkbox class="checkbox-custom" slot="start" formControlName="female_if_male_is_unavailable"
+                  labelPlacement="end">
+                  Book Female if Male is unavailable.</ion-checkbox>
+
+              </ion-item>
+
+              <ion-item lines="none" class="ion-no-padding checkbox-item"
+                *ngIf="guestDetailForm.get(['guest_details', i, 'therapist_gender'])?.value == 'Female'">
+                <ion-checkbox class="checkbox-custom" slot="start" formControlName="male_if_female_is_unavailable"
+                  labelPlacement="end">
+                  Book Male if Female is unavailable.</ion-checkbox>
+
+              </ion-item>
+            </ion-col>
+
+
+            <!-- <ion-col size="12">
+              <p class="filed-label">Pressure Level Preference</p>
+              <ion-item lines="none" class="field relative-item">
+                <ion-select class="select" placeholder="Select Pressure Level" formControlName="pressurelevel"
+                  toggleIcon="">
+                  <ion-select-option value="1">1</ion-select-option>
+                  <ion-select-option value="2">2</ion-select-option>
+                  <ion-select-option value="3">3</ion-select-option>
+                  <ion-select-option value="4">4</ion-select-option>
+                  <ion-select-option value="5">5</ion-select-option>
+                  <ion-select-option value="6">6</ion-select-option>
+                  <ion-select-option value="7">7</ion-select-option>
+                  <ion-select-option value="8">8</ion-select-option>
+                  <ion-select-option value="9">9</ion-select-option>
+                  <ion-select-option value="10">10</ion-select-option>
+                </ion-select>
+                <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+              </ion-item>
+            </ion-col>
+
+            <ion-col size="12">
+              <p class="filed-label">Communication Level Preference</p>
+              <ion-item lines="none" class="field relative-item">
+                <ion-select placeholder="Select Communication Level" formControlName="communicationlevel" toggleIcon="">
+                  <ion-select-option value="None">None</ion-select-option>
+                  <ion-select-option value="Little">Little</ion-select-option>
+                  <ion-select-option value="Chatty">Chatty</ion-select-option>
+                </ion-select>
+                <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+              </ion-item>
+            </ion-col> -->
+
+          </ng-container>
+
+          <!-- <ion-col size="12">
+            <ion-button expand="block" color="danger" (click)="removeGuest(i)">Remove Guest</ion-button>
+          </ion-col> -->
+
+          <ion-col size="12" size-md="12" class="mt-20" *ngIf="guest_details.length < maxGuests && newGuestIndex == i">
+            <ion-button expand="block" class="primary-btn" [disabled]="!isGuestValid(i)" (click)="addGuestCustom()">Add
+              Next Guest</ion-button>
+          </ion-col>
+
+        </ng-container>
+
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center mt-20">
+        <ion-col size="12" size-md="12" *ngIf="guest_details.length == maxGuests">
+          <ion-button expand="block" class="primary-btn" type="submit"
+            [disabled]="guestDetailForm.invalid">NEXT</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

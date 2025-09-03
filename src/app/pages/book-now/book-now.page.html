@@ -1,0 +1,135 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>HOW MANY PEOPLE?</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button id="booknow1-help-trigger" *ngIf="helptext">
+        <ion-icon slot="end" name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="booknow1-help-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+
+    <ion-row>
+
+      <ion-col size="12" *ngIf="therapist_id">
+        <!-- <h1 class="page-title mb-20">Session Request</h1> -->
+        <ion-list lines="none" class="list-style-1">
+          <ion-item>
+            <ion-avatar slot="start">
+
+              <img alt="" [src]="therapist_data.profile_image" onerror="this.src='/assets/images/user1-image.jpg'" />
+              <ion-text class="female-icon">
+                <ion-icon [ngStyle]="{
+                  'transform': therapist_data.gender === 'Male' ? 'rotate(218deg)' : 'rotate(0deg)',
+                  'transition': 'transform 0.3s ease'
+                }" src="assets/icons/female.svg">
+                </ion-icon>
+              </ion-text>
+            </ion-avatar>
+            <ion-label>
+              <h3>{{therapist_data?.first_name}} {{therapist_data?.last_name?.charAt(0).toUpperCase() }}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <!-- <ion-col size="12">
+        <h1 class="page-title">How many People?</h1>
+      </ion-col> -->
+
+      <ion-col size="12">
+        <ion-segment value="{{selectedPeople}}" [scrollable]="true">
+          <ion-segment-button value="1" (click)="selectPeople(1)">
+            <ion-label>1</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="2" (click)="selectPeople(2)">
+            <ion-label>2</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="3" (click)="selectPeople(3)">
+            <ion-label>3</ion-label>
+          </ion-segment-button>
+          <ion-segment-button value="4" (click)="selectPeople(4)">
+            <ion-label>4</ion-label>
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>
+
+      <ion-col *ngIf="selectedPeople == 1" size="12">
+        <ion-card>
+          <!-- <h3>Single</h3> -->
+          <h3>One Person</h3>
+          <p>One therapist for one person.</p>
+        </ion-card>
+      </ion-col>
+
+      <ng-container *ngIf="selectedPeople == 2">
+        <!-- <ion-col size="12" (click)="selectType('Couples')">
+          <ion-card [ngClass]="{'active-card': isActiveCouple}">
+            <h3>Two Therapists</h3>
+            <p>Two massages at the same time.</p>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-checkbox class="checkbox-custom ion-text-wrap" [checked]="backToBackChecked" labelPlacement="end"
+            justify="start">Secure back-to-back if only one therapist is available.</ion-checkbox>
+        </ion-col> -->
+
+        <!-- (click)="selectType('Back-to-back')" -->
+
+        <ion-col size="12" >
+          <!-- [ngClass]="{'active-card': isActiveBackToBack}" -->
+          <ion-card >
+            <h3>Back-to-Back</h3>
+            <p>One therapist for two people one after another</p>
+            <!-- <p>One therapist for each person one after another.</p> -->
+          </ion-card>
+        </ion-col>
+
+        <!-- <ion-col size="12">
+          <h2 class="head-2">Back-to-back Therapist Gender</h2>
+          <ion-radio-group  [(ngModel)]="selectedGender">
+            <ion-radio value="Any">Any</ion-radio>
+            <ion-radio value="Female">Female</ion-radio>
+            <ion-radio value="Male">Male</ion-radio>
+          </ion-radio-group>
+        </ion-col> -->
+      </ng-container>
+
+      <ion-col *ngIf="selectedPeople == 3" size="12">
+        <ion-card>
+          <h3>Back-to-Back</h3>
+          <p>One therapist for three people one after another.</p>
+        </ion-card>
+      </ion-col>
+
+      <ion-col *ngIf="selectedPeople == 4" size="12">
+        <ion-card>
+          <h3>Back-to-Back</h3>
+          <!-- <p>One therapist for two people one after another.</p> -->
+          <p>One therapist for four people one after another.</p>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn" type="submit" (click)="gotoNext()">NEXT</ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,117 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Payment information</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid  [fixed]="true">
+  <ion-list class="ion-padding list-style">
+    <ion-list-header class="ion-no-padding">
+      <ion-label class="ion-no-margin">My Payment Methods</ion-label>
+    </ion-list-header>
+    <!-- <ion-col size="12">
+      <ion-segment [(ngModel)]="selectedSegment">
+        <ion-segment-button value="card">
+          <ion-label>Card Details</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="bank">
+          <ion-label>Bank Details</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+    </ion-col> -->
+    <div class="ion-text-center ion-padding" *ngIf="!ready">
+      <ion-spinner color="light"></ion-spinner>
+    </div>
+   
+    <ng-container *ngIf="selectedSegment === 'card'">
+      <ion-item lines="none" detail="false" *ngFor="let item of paymentMethodList.cards; let i = index">
+        <ion-text class="icon-box" slot="start">
+          <ion-icon src="assets/icons/card.svg"></ion-icon>
+        </ion-text>
+        <ion-label>
+          <h3>{{item.card_name | titlecase}} {{item.ending_in}}</h3>
+        </ion-label>
+        <ion-buttons slot="end">
+          
+          <ion-button color="light" (click)="goToEditCard(item)">
+            <ion-icon class="pen" src="assets/icons/edit.svg"></ion-icon>
+          </ion-button>
+
+          <ion-button color="light" (click)="confirmDeleteAlert(i, item.card_id)">
+            <ion-icon src="assets/icons/delete.svg"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+      <div class="no-found" *ngIf="ready && paymentMethodList.cards.length === 0 && selectedSegment === 'card'">
+        <p>No Cards Found.</p>
+      </div>
+    </ng-container>
+ 
+    <!-- <div class="no-found" *ngIf="ready && paymentMethodList.connected_banks.length === 0 && selectedSegment === 'bank'">
+      <p>No Bank Account Found.</p>
+    </div>
+    <ng-container *ngIf="selectedSegment === 'bank'">
+      <ion-item lines="none" detail="false" *ngFor="let item of paymentMethodList.connected_banks;let i = index">
+        <ion-text class="icon-box" slot="start">
+          <ion-icon src="assets/icons/card.svg"></ion-icon>
+        </ion-text>
+        <ion-label>
+          <h3>{{item.bank_name}} {{item.last4}}</h3>
+        </ion-label>
+        <ion-buttons slot="end">
+          <ion-button color="light"  (click)="confirmDeleteBank(i, item.id)">
+            <ion-icon src="assets/icons/delete.svg"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-item>
+    </ng-container> -->
+    <ion-item lines="none" detail="false" routerLink="/add-debit-card">
+      <!-- (click)="add('card')" -->
+      <ion-text class="icon-box white-box" slot="start">
+        <ion-icon src="assets/icons/add-circle.svg"></ion-icon>
+      </ion-text>
+      <ion-label>
+        <h3>Add Debit Card</h3>
+      </ion-label>
+    </ion-item>
+
+    <!-- <ion-item lines="none" detail="false" routerLink="/add-bank-account">
+   
+      <ion-text class="icon-box white-box" slot="start">
+        <ion-icon src="assets/icons/add-circle.svg"></ion-icon>
+      </ion-text>
+      <ion-label>
+        <h3>Add Bank Account</h3>
+      </ion-label>
+    </ion-item> -->
+  </ion-list>
+
+  <ion-list class="ion-padding list-style">
+    <ion-list-header class="ion-no-padding">
+      <ion-label class="ion-no-margin">Transaction History</ion-label>
+      <ion-button class="ion-no-margin view-all text-underline" routerLink="/my-transaction">VIEW ALL</ion-button>
+    </ion-list-header>
+    <div class="ion-text-center ion-padding" *ngIf="!is_transaction">
+      <ion-spinner color="light"></ion-spinner>
+    </div>
+    <ion-item lines="none" detail="false" *ngFor="let item of transaction" (click)="goToBooking(item)">
+      <!-- (click)="goToBooking(item)" -->
+      <ion-label>
+        <h3>{{item.created_at  | date: 'MM/dd/yyyy'}}</h3>
+      </ion-label>
+      <ion-text slot="end" class="price-text">
+      {{item.total_amount | currency}}
+        <br>
+        {{item.brand}}{{item.last4}}
+      </ion-text>
+    </ion-item>
+    <div class="no-found" *ngIf="is_transaction && transaction.length === 0">
+      <p>No Transaction Found.</p>
+    </div>
+  </ion-list>
+</ion-grid>
+</ion-content>

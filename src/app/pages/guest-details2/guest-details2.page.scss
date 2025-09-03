@@ -1,0 +1,94 @@
+ion-radio-group {
+    .active {
+        --background: var(--ion-color-secondary) !important;
+        --background-hover: var(--ion-color-secondary) !important;
+        --background-activated: var(--ion-color-secondary) !important;
+        --background-focused: var(--ion-color-secondary) !important;
+        --border-color: var(--ion-color-white) !important;
+    }
+
+    ion-item {
+        --border-style: solid;
+        --border-width: 1px;
+        --border-color: var(--border-rgb);
+        --border-radius: 12px;
+        --background: var(--ion-color-primary);
+        --background-hover: var(--ion-color-primary);
+        --background-activated: var(--ion-color-primary);
+        --background-focused: var(--ion-color-primary);
+        margin-bottom: 15px;
+        &:last-child{
+            margin-bottom: 0 !important;
+        }
+        ion-radio {
+            --color: var(--ion-color-white);
+            --color-checked: var(--ion-color-white);
+
+            &::part(label) {
+                white-space: unset;
+                width: 100%;
+                // margin-inline: 0px 8px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+
+            h3 {
+                font-size: 14px;
+                color: var(--ion-color-white);
+                font-family: M-Regular !important;
+                margin-left: 0;
+                margin-right: 0;
+                margin-top: 0;
+                margin-bottom: 3px;
+            }
+
+            p {
+                font-size: 14px;
+                color: var(--ion-color-light);
+                font-family: M-Regular !important;
+                margin-top: 5px;
+                margin-bottom: 0;
+            }
+        }
+
+        ion-label {
+            h3 {
+                font-size: 14px;
+                color: var(--ion-color-white);
+                font-family: M-Regular !important;
+            }
+
+            p {
+                font-size: 14px;
+                color: var(--ion-color-light);
+                font-family: M-Regular !important;
+                margin-top: 5px;
+            }
+        }
+
+        ion-button {
+            --background: transparent;
+        }
+    }
+}
+
+.add {
+    color: var(--ion-color-white);
+    text-align: center;
+    font-size: 14px;
+    font-family: M-Bold;
+    margin: 0;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.no-location {
+    color: gold;
+    text-align: center;
+}
+
+.pen {
+
+    font-size: 15px;
+    color: white;
+}

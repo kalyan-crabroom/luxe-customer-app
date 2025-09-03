@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Gift Card</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addGiftCardForm" (ngSubmit)="onSubmit(addGiftCardForm.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-input placeholder="Give your gift card a title. (i.e. Happy Birthday!)" formControlName="name" type="text" appCapitalizeFirst></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.name">
+            <p class="err"
+              *ngIf="addGiftCardForm.get('name')?.hasError(validation.type) && (addGiftCardForm.get('name')?.dirty || addGiftCardForm.get('name')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <span *ngIf="addGiftCardForm.value.amount > 0 " class="doller">$</span><ion-input placeholder="Enter Amount($)" formControlName="amount" type="number"></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.amount">
+            <p class="err"
+              *ngIf="addGiftCardForm.get('amount')?.hasError(validation.type) && (addGiftCardForm.get('amount')?.dirty || addGiftCardForm.get('amount')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12">
+
+          <ion-item lines="none" class="field">
+            <ion-input placeholder="Enter Recipient Name" formControlName="recipient_name" type="text" appCapitalizeFirst></ion-input>
+          </ion-item>
+
+          <ng-container *ngFor="let validation of validation_messages.recipient_name">
+            <p class="err"
+              *ngIf="addGiftCardForm.get('recipient_name')?.hasError(validation.type) && (addGiftCardForm.get('recipient_name')?.dirty || addGiftCardForm.get('recipient_name')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+
+        </ion-col>
+
+
+        <ion-col size="12">
+
+          <ion-item lines="none" class="field">
+            <ion-input placeholder="Enter Recipient Email" formControlName="recipient_email" type="text"></ion-input>
+          </ion-item>
+
+          <ng-container *ngFor="let validation of validation_messages.recipient_email">
+            <p class="err"
+              *ngIf="addGiftCardForm.get('recipient_email')?.hasError(validation.type) && (addGiftCardForm.get('recipient_email')?.dirty || addGiftCardForm.get('recipient_email')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-textarea class="message" placeholder="Enter Heartfelt Message" rows="5"
+              formControlName="description" appCapitalizeFirst></ion-textarea>
+          </ion-item>
+
+          <ng-container *ngFor="let validation of validation_messages.description">
+            <p class="err"
+              *ngIf="addGiftCardForm.get('description')?.hasError(validation.type) && (addGiftCardForm.get('description')?.dirty || addGiftCardForm.get('description')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item class="field" button="true" (click)="openDateModal(true)" detail="false" lines="none">
+            <ion-text class="dateTime placeHolder" *ngIf="!schedule_date">Select a date for gift card delivery.</ion-text>
+            <ion-text class="dateTime" *ngIf="schedule_date">{{ schedule_date}}</ion-text>
+            <ion-modal id="example-modal" #modal [isOpen]="isDateModal" [backdropDismiss]="false"
+              (willDismiss)="isDateModal = false">
+              <ng-template>
+                <div class="wrapper">
+                  <ion-datetime [showDefaultButtons]="true" formControlName="schedule_delivery_date" presentation="date"
+                    (ionChange)="onDateSelected($event)" color="light" [min]="minDate"></ion-datetime>
+                </div>
+              </ng-template>
+            </ion-modal>
+            <ion-icon class="abst" name="calendar-outline"></ion-icon>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="12">
+          <div class="flex-title mb-15">
+            <h5 class="section-title mb-0 mt-0">Select Payment Method</h5>
+            <ion-icon name="add-circle" (click)="addCard()"></ion-icon>
+          </div>
+
+          <div class="ion-text-center ion-padding" *ngIf="ready">
+            <ion-spinner color="light"></ion-spinner>
+          </div>
+          <div class="no-found" *ngIf="!ready && paymentMethodList.cards.length === 0">
+            <p>No Cards Found.</p>
+          </div>
+
+          <ion-list class="list-style" *ngIf="!ready && paymentMethodList.cards.length > 0">
+            <ion-radio-group formControlName="card_id">
+              <ion-item lines="none" class="card-item" *ngFor="let item of paymentMethodList.cards">
+                <ion-icon src="assets/icons/card-bg.svg" slot="start"></ion-icon>
+                <ion-radio mode="md" class="choose" justify="space-between" [value]="item.card_id"
+                  labelPlacement="start">{{item.card_name | titlecase}} {{item.ending_in}}</ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+
+        </ion-col>
+
+
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button expand="block" class="primary-btn" type="submit"
+            [disabled]="!addGiftCardForm.valid">Submit</ion-button>
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

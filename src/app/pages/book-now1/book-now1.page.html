@@ -1,0 +1,189 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Add Location</ion-title>
+    <!-- <ion-icon slot="end" class="question" name="help-circle" id="addlocation-help-trigger" *ngIf="helptext"></ion-icon> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="addlocation-help-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="bookNow1" (ngSubmit)="onSubmit(bookNow1.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row>
+
+
+
+        <ion-col size="12">
+          <div class="search-item">
+
+            <ion-item lines="none" class="field">
+              <ion-icon name="location" slot="start"></ion-icon>
+              <ion-input type="text" placeholder="Location Address" formControlName="location_address"
+                (ionInput)="getLocation($event)" [(ngModel)]="address" [clearInput]="true"></ion-input>
+            </ion-item>
+
+            <ng-container *ngFor="let validation of validation_messages.location_address">
+              <p class="err"
+                *ngIf="bookNow1.get('location_address')?.hasError(validation.type) && (bookNow1.get('location_address')?.dirty || bookNow1.get('location_address')?.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+              </p>
+            </ng-container>
+
+            <div class="wrap_data" *ngIf="allLocations.length > 0 && address !='' ">
+              <ion-list>
+                <ion-item *ngFor="let item of allLocations" tappable (click)="chooseLocation(item)">
+                  <ion-label>
+                    <p>
+                      {{ item }}
+                    </p>
+                  </ion-label>
+                </ion-item>
+              </ion-list>
+            </div>
+
+          </div>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-icon name="location" slot="start"></ion-icon>
+            <ion-input type="text" placeholder="Location Name" formControlName="location_name" [clearInput]="true"
+              appCapitalizeFirst></ion-input>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.location_name">
+            <p class="err"
+              *ngIf="bookNow1.get('location_name')?.hasError(validation.type) && (bookNow1.get('location_name')?.dirty || bookNow1.get('location_name')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-icon name="location" slot="start"></ion-icon>
+            <ion-input type="text" placeholder="Apartment or Room #" formControlName="location_type"
+              [clearInput]="true"></ion-input>
+          </ion-item>
+          <!-- <ng-container *ngFor="let validation of validation_messages.location_type">
+            <p class="err"
+              *ngIf="bookNow1.get('location_type')?.hasError(validation.type) && (bookNow1.get('location_type')?.dirty || bookNow1.get('location_type')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container> -->
+        </ion-col>
+
+        <!-- <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-textarea rows="7" placeholder="Parking Directions (meter, street, ramp, fees, etc.)"
+              formControlName="parking_directions"></ion-textarea>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.parking_directions">
+            <p class="err"
+              *ngIf="bookNow1.get('parking_directions')?.hasError(validation.type) && (bookNow1.get('parking_directions')?.dirty || bookNow1.get('parking_directions')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col> -->
+
+        <ion-col size="12" class="textarea-container">
+          <ion-item lines="none" class="field">
+            <ion-textarea #parkingDirectionsTextarea rows="7"
+              placeholder="Parking Directions (meter, street, ramp, fees, etc.)" formControlName="parking_directions"
+              appCapitalizeFirst></ion-textarea>
+            <ion-buttons *ngIf="bookNow1.get('parking_directions')?.value" class="clear-btn">
+              <ion-button fill="clear" color="medium" (click)="clearParkingDirections(parkingDirectionsTextarea)">
+                <ion-icon name="close-circle"></ion-icon>
+              </ion-button>
+            </ion-buttons>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.parking_directions">
+            <p class="err"
+              *ngIf="bookNow1.get('parking_directions')?.hasError(validation.type) && (bookNow1.get('parking_directions')?.dirty || bookNow1.get('parking_directions')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+
+
+        <ion-col size="12">
+          <p class="filed-label mb-15">Table Details <span class="required">*</span></p>
+          <ion-radio-group mode="md" formControlName="table">
+            <ion-radio labelPlacement="end" value="I have my own table">I have my own
+              table</ion-radio><br />
+            <ion-radio labelPlacement="end" value="Therapist provides">Therapist
+              provides</ion-radio><br />
+          </ion-radio-group>
+          <ng-container *ngFor="let validation of validation_messages.table">
+            <p class="err"
+              *ngIf="bookNow1.get('table')?.hasError(validation.type) && (bookNow1.get('table')?.dirty || bookNow1.get('table')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12">
+          <p class="filed-label mb-15">Sheet Preferences <span class="required">*</span></p>
+          <ion-radio-group mode="md" formControlName="sheet">
+            <ion-radio labelPlacement="end" value="I have my own sheets">I have my own
+              sheets</ion-radio><br />
+            <ion-radio labelPlacement="end" value="Therapist Provides">Therapist
+              Provides</ion-radio><br />
+          </ion-radio-group>
+        </ion-col>
+
+        <ion-col size="12">
+          <p class="filed-label">Stair Details <span class="required">*</span></p>
+          <ion-item lines="none" class="field relative-item">
+            <ion-select toggleIcon="" placeholder="Select an Option" formControlName="stair">
+              <ion-select-option value="No Stairs">No Stairs</ion-select-option>
+              <ion-select-option value="1 Flight">1 Flight</ion-select-option>
+              <ion-select-option value="2 Flight">2 Flight</ion-select-option>
+              <ion-select-option value="3 Flight">3 Flight</ion-select-option>
+            </ion-select>
+            <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.stair">
+            <p class="err"
+              *ngIf="bookNow1.get('stair')?.hasError(validation.type) && (bookNow1.get('stair')?.dirty || bookNow1.get('stair')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12">
+          <p class="filed-label">Pet Details <span class="required">*</span></p>
+          <ion-item lines="none" class="field relative-item">
+            <ion-select toggleIcon="" placeholder="Select an Option" formControlName="pet">
+              <ion-select-option value="None">None</ion-select-option>
+              <ion-select-option value="Dogs">Dogs</ion-select-option>
+              <ion-select-option value="Cats">Cats</ion-select-option>
+              <ion-select-option value="Both Cat & Dog">Both Cat & Dog</ion-select-option>
+            </ion-select>
+            <ion-icon name="caret-down-outline" class="icon-right"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.pet">
+            <p class="err"
+              *ngIf="bookNow1.get('pet')?.hasError(validation.type) && (bookNow1.get('pet')?.dirty || bookNow1.get('pet')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+        <ion-col size="12" size-md="6" offset-md="3">
+          <ion-button expand="block" class="primary-btn" type="submit" [disabled]="bookNow1.invalid">Submit</ion-button>
+          <!-- [disabled]="bookNow1.invalid" -->
+          <!-- routerLink="/book-now2" -->
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>
