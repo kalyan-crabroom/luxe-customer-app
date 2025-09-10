@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">Luxe Touch Provider</string>
-    <string name="title_activity_main">Luxe Touch Provider</string>
-    <string name="package_name">io.deeplycalm.therapist.knoxweb</string>
-    <string name="custom_url_scheme">io.deeplycalm.therapist.knoxweb</string>
-</resources>

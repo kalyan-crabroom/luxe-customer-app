@@ -1,7 +1,0 @@
-{
-  "name": "luxe-touch",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
