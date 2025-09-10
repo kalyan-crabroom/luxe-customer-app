@@ -35,7 +35,7 @@
     {
       "name": "ipwda-api",
       "version": 1,
-      "urls": ["https://backend.luxetouch.com/**"],
+      "urls": ["https://bhaveshd.sg-host.com/**"],
       "cacheConfig": {
         "strategy": "freshness",
         "maxSize": 100,
