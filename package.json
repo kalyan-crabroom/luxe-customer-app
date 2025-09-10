@@ -38,7 +38,6 @@
     "@ctrl/ngx-emoji-mart": "^9.2.0",
     "@ionic/angular": "^8.2.1",
     "@ionic/pwa-elements": "^3.3.0",
-    "cap": "^0.2.1",
     "cordova-plugin-purchase": "^13.11.1",
     "firebase": "^10.14.1",
     "http-server": "^14.1.1",
@@ -82,6 +81,9 @@
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
     "typescript": "~5.2.2"
+  },
+  "optionalDependencies": {
+    "cap": "^0.3.0"
   },
   "description": "An Ionic project"
 }
