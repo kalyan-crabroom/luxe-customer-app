@@ -1,0 +1,449 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Selected Session</ion-title>
+    <!-- <ion-icon class="circle" slot="end" name="help-circle" id="click-trigger" *ngIf="helptext"></ion-icon> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="click-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+
+</ion-header>
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12" *ngIf="bookingDetails?.display_status">
+        <h1 class="page-title mb-20">Status</h1>
+
+        <ion-list lines="none" class="list-style-1">
+          <ion-item class="item-status mb-0">
+            <ion-label>
+              <h3>{{ bookingDetails?.display_status}}</h3>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+
+      <ion-col size="12">
+        <!-- <h1 class="page-title">Selected Session</h1> -->
+        <div class="ion-text-center ion-padding" *ngIf="!ready">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+        <div *ngIf="ready && !bookingDetails">
+          <p class="no-location">No booking found.</p>
+        </div>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails">
+        <ion-card>
+          
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none" *ngIf="bookingDetails?.location_details?.location_address">
+            <ion-label>Location</ion-label>
+            <ion-text slot="end">{{ bookingDetails?.location_details?.location_address }}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none" *ngIf="bookingDetails.location_details?.location_type">
+            <ion-label>Location Type</ion-label>
+            <ion-text slot="end">{{bookingDetails?.location_details?.location_type}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none">
+            <ion-label>Date</ion-label>
+            <ion-text slot="end">{{bookingDetails?.booking_date | date: 'MM/dd/yyyy'}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none">
+            <ion-label>Time</ion-label>
+            <ion-text slot="end">{{bookingDetails?.booking_start_time}} -
+              {{bookingDetails?.booking_end_time}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none">
+            <ion-label>Massage Type</ion-label>
+            <ion-text slot="end">{{bookingDetails?.treatment_name}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none">
+            <ion-label>Duration</ion-label>
+            <ion-text slot="end">{{bookingDetails?.therapist_duration}} Minutes</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding ion-align-items-start" lines="none" *ngIf="bookingDetails.how_many_people">
+            <ion-label>How many People?</ion-label>
+            <ion-text slot="end">{{bookingDetails?.how_many_people}}</ion-text>
+          </ion-item>
+
+          <!-- <ion-item class="ion-no-padding ion-align-items-start" lines="none" *ngIf="bookingDetails.is_couples">
+            <ion-label>Type</ion-label>
+            <ion-text slot="end">{{bookingDetails?.is_couples}}</ion-text>
+          </ion-item> -->
+
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails">
+        <ion-card>
+          <ion-item class="ion-no-padding" lines="none" *ngIf="bookingDetails.therapist_gender">
+            <ion-label>Therapist Gender</ion-label>
+            <ion-text slot="end">{{bookingDetails?.therapist_gender}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none" *ngIf="bookingDetails?.therapist_gender == 'Female' ">
+            <ion-label>Book Male if Female is unavailable</ion-label>
+            <ion-text slot="end">{{bookingDetails?.male_if_female_is_unavailable == '1' ? 'Yes' : 'No'}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none" *ngIf="bookingDetails?.therapist_gender == 'Male' ">
+            <ion-label>Book Female if Male is unavailable</ion-label>
+            <ion-text slot="end">{{bookingDetails?.female_if_male_is_unavailable == '1' ? 'Yes' : 'No'}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>This message is for
+            </ion-label>
+            <ion-text slot="end">{{bookingDetails?.massage_for}}</ion-text>
+          </ion-item>
+
+          <!-- <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Pressure Level</ion-label>
+            <ion-text slot="end">{{bookingDetails?.pressure_level}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Music</ion-label>
+            <ion-text slot="end">{{bookingDetails?.music == 'on' ? 'Yes' : 'No'}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Communication Level</ion-label>
+            <ion-text slot="end">{{bookingDetails?.communication_level}}</ion-text>
+          </ion-item> -->
+
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails">
+
+        <ion-card>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Table Details</ion-label>
+            <ion-text slot="end">{{bookingDetails?.location_details?.table}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Sheet Preferences</ion-label>
+            <ion-text slot="end">{{bookingDetails?.location_details?.sheet}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Stair Details</ion-label>
+            <ion-text slot="end">{{bookingDetails?.location_details?.stair}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Pet Details</ion-label>
+            <ion-text slot="end">{{bookingDetails?.location_details?.pet == 'Both' ? 'Both Cat & Dog' : bookingDetails?.location_details?.pet}}</ion-text>
+          </ion-item>
+
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails?.notes_for_therapist">
+
+        <ion-card>
+          <h3>Notes for Therapist</h3>
+          <p>{{bookingDetails?.notes_for_therapist}}
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails?.location_details?.parking_directions">
+
+        <ion-card>
+          <h3>Parking Directions</h3>
+          <p>{{bookingDetails?.location_details?.parking_directions}}</p>
+        </ion-card>
+
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails && bookingDetails?.guest_details">
+        <h1 class="page-title mb-15">Guest Details</h1>
+        <ng-container *ngFor="let item of bookingDetails?.guest_details; let i = index">
+          <p class="filed-label">Guest No. {{i + 1}} </p>
+          <ion-card>
+
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label>Name</ion-label>
+              <ion-text slot="end">{{item?.first_name}} {{item?.last_name?.charAt(0).toUpperCase() }}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.guestIdentity">
+              <ion-label>Guest Identify</ion-label>
+              <ion-text slot="end">{{item?.guestIdentity}}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.is_minor">
+              <ion-label>Minor(Age)</ion-label>
+              <ion-text slot="end">{{item?.is_minor ? 'Yes' : 'No'}}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label>Massage Type</ion-label>
+              <ion-text slot="end">{{item?.selectedTreatment?.treatment ? item?.selectedTreatment.treatment :
+                bookingDetails?.treatment_name }}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none">
+              <ion-label>Duration</ion-label>
+              <ion-text slot="end">{{item?.selectedTreatment?.therapist_duration ?
+                item?.selectedTreatment.therapist_duration : bookingDetails?.therapist_duration }} Minutes</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.therapist_gender">
+              <ion-label>Therapist Gender</ion-label>
+              <ion-text slot="end">{{ item?.therapist_gender }}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.therapist_gender == 'Female' ">
+              <ion-label>Book Male if Female is unavailable</ion-label>
+              <ion-text slot="end">{{item?.male_if_female_is_unavailable == '1' ? 'Yes' : 'No'}}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.therapist_gender == 'Male' ">
+              <ion-label>Book Female if Male is unavailable</ion-label>
+              <ion-text slot="end">{{item?.female_if_male_is_unavailable == '1' ? 'Yes' : 'No'}}</ion-text>
+            </ion-item>
+
+            <!-- <ion-item class="ion-no-padding" lines="none" *ngIf="item?.pressurelevel">
+              <ion-label>Pressure Level</ion-label>
+              <ion-text slot="end">{{item?.pressurelevel}}</ion-text>
+            </ion-item>
+
+            <ion-item class="ion-no-padding" lines="none" *ngIf="item?.communicationlevel ">
+              <ion-label>Communication Level</ion-label>
+              <ion-text slot="end">{{item?.communicationlevel}}</ion-text>
+            </ion-item> -->
+
+          </ion-card>
+        </ng-container>
+        <!-- <ion-card>
+          <div class="table-responsive">
+            <table>
+              <thead>
+
+                <tr>
+                  <th>Name</th>
+                  <th>Number</th>
+                  <th>Identify</th>
+                  <th>Minor(Age)</th>
+                </tr>
+
+              </thead>
+              <tbody>
+
+                <tr *ngFor="let item of bookingDetails?.guest_details">
+                  <td>{{item?.first_name}} {{item?.last_name}}</td>
+                  <td>{{item?.phone}}</td>
+                  <td>{{item?.guestIdentity}}</td>
+                  <td>{{item?.is_minor ? 'Yes' : 'No'}}</td>
+                </tr>
+
+              </tbody>
+
+            </table>
+          </div>
+        </ion-card> -->
+
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails">
+
+        <h1 class="page-title font-19 mb-15">Selected Payment Method</h1>
+        <ion-card>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Subtotal</ion-label>
+            <ion-text slot="end">{{bookingDetails?.booking_amount | currency}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Taxes & Fees</ion-label>
+            <ion-text slot="end">{{bookingDetails?.tax | currency}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none" *ngIf="bookingDetails?.discount > 0">
+            <ion-label>Discount</ion-label>
+            <!-- ({{bookingDetails?.discount}}%) -->
+            <ion-text slot="end">{{bookingDetails?.you_saved_discount_value | currency}}</ion-text>
+          </ion-item>
+
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label>Tips</ion-label>
+            <ion-text slot="end">{{bookingDetails?.tip | currency}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none" *ngIf="bookingDetails?.bonus_tip > 0">
+            <ion-label>Bonus Tip</ion-label>
+            <ion-text slot="end">{{bookingDetails?.bonus_tip | currency}}</ion-text>
+          </ion-item>
+
+          <ion-item class="ion-no-padding" lines="none">
+            <ion-label class="font-bold text-white">Total</ion-label>
+            <ion-text slot="end" class="font-bold text-white">{{bookingDetails?.total | currency}}</ion-text>
+          </ion-item>
+
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12" *ngIf="ready && bookingDetails">
+        <ion-card *ngIf="bookingDetails?.transaction?.brand != 'N/A' && bookingDetails?.transaction?.last4 != 'N/A'">
+          <ion-item class="ion-no-padding ion-align-items-center" lines="none">
+            <ion-text class="icon-box" slot="start">
+              <ion-icon src="assets/icons/card.svg"></ion-icon>
+            </ion-text>
+            <ion-label>
+              <h3 class="text-uppercase">{{bookingDetails?.transaction?.brand }} {{bookingDetails?.transaction?.last4}}
+              </h3>
+            </ion-label>
+          </ion-item>
+        </ion-card>
+
+        <ion-card *ngIf="bookingDetails?.wallet_amount > 0">
+          <ion-item class="ion-no-padding ion-align-items-center" lines="none">
+            <ion-text class="icon-box" slot="start">
+              <ion-icon name="wallet"></ion-icon>
+            </ion-text>
+            <ion-label>
+              <h3 class="text-uppercase">Luxe Touch Credits</h3>
+            </ion-label>
+          </ion-item>
+
+        </ion-card>
+      </ion-col>
+
+
+
+    </ion-row>
+    <ion-row *ngIf="ready">
+
+      <ion-col size="12" size-md="6" offset-md="3"
+        *ngIf="bookingDetails?.status == 4 || bookingDetails?.status == 2 || bookingDetails?.status == 5 || bookingDetails?.status == 7">
+        <ion-button expand="block" class="primary-btn" (click)="goToReport(bookingDetails)">Report Session</ion-button>
+      </ion-col>
+
+      <!-- <ion-col size="12" size-md="6" offset-md="3"
+        *ngIf="bookingDetails?.status == 2">
+        <ion-button expand="block" class="primary-btn" (click)="goToCancelAcceptedSession(bookingDetails)">Cancel Session</ion-button>
+      </ion-col> -->
+
+      <ion-col size="12" size-md="6" offset-md="3" *ngIf="bookingDetails?.status == 1">
+        <ion-button expand="block" class="primary-btn" (click)="bonusTipModal(bookingDetails)">Bonus Tip</ion-button>
+      </ion-col>
+
+      <ion-col size="12" size-md="6" offset-md="3" *ngIf="bookingDetails?.status == 1 || bookingDetails?.status == 2">
+        <ion-button expand="block" class="primary-btn" (click)="goToCancelSession(bookingDetails)">Cancel Session</ion-button>
+      </ion-col>
+
+      <ion-col size="12" size-md="6" offset-md="3" *ngIf="bookingDetails?.status == 4">
+        <!-- <ion-button expand="block" class="primary-btn" (click)="goToSession(bookingDetails)">Session Complete</ion-button> -->
+        <ion-button expand="block" class="primary-btn" (click)="goToSession(bookingDetails)">REVIEW THERAPIST</ion-button>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal [isOpen]="isTipModal" class="modal-style-1" [backdropDismiss]="false">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-icon src="assets/icons/back-btn-arrow.svg" (click)="modalClose(false)" class="back-button"></ion-icon>
+          </ion-buttons>
+          <ion-title>BONUS TIP</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
+      <form class="flex-container-box" [formGroup]="bonusTipForm" (ngSubmit)="submitBonusTipForm(bonusTipForm.value)">
+        <div class="modal-body">
+          <div class="modal-header">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+
+                  <ion-item lines="none" class="field">
+                    <span *ngIf="amount > 0"class="doller">$</span>
+                    <ion-input type="tel" formControlName="amount" placeholder="Enter amount($)" (ionBlur)="formatAmount()"></ion-input>
+                  </ion-item>
+      
+                  <ng-container *ngFor="let validation of validation_messages.amount">
+                    <p class="err"
+                      *ngIf="bonusTipForm.get('amount')?.hasError(validation.type) && (bonusTipForm.get('amount')?.dirty || bonusTipForm.get('amount')?.touched)">
+                      <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+                    </p>
+                  </ng-container>
+      
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div class="modal-content">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12">
+                  <div class="flex-title mb-15">
+                    <h5 class="section-title mb-0 mt-0">Select Payment Method</h5>
+                    <ion-icon name="add-circle" (click)="addCard()"></ion-icon>
+                  </div>
+                 
+                  <div class="ion-text-center ion-padding" *ngIf="is_card_ready">
+                    <ion-spinner color="light"></ion-spinner>
+                  </div>
+                  <div class="no-found" *ngIf="!is_card_ready && paymentMethodList.cards.length === 0">
+                    <p>No Cards Found.</p>
+                  </div>
+
+                  <ion-list class="list-style" *ngIf="!is_card_ready && paymentMethodList.cards.length > 0">
+                    <ion-radio-group formControlName="card_id">
+                      <ion-item lines="none" class="card-item" *ngFor="let item of paymentMethodList.cards">
+                        <ion-icon src="assets/icons/card-bg.svg" slot="start"></ion-icon>
+                        <ion-radio mode="md" class="choose" justify="space-between" [value]="item.card_id"
+                          labelPlacement="start">{{item.card_name | titlecase}} {{item.ending_in}}</ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-list>
+
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+
+          </div>
+          <div class="modal-footer">
+            <ion-grid>
+              <ion-row>
+                <ion-col size="12" size-sm="12">
+                  <ion-button class="primary-btn" expand="block" [disabled]="bonusTipForm.invalid" type="submit" >Submit</ion-button>
+                </ion-col>
+                <!-- <ion-col size="12" size-sm="6">
+                  <ion-button class="primary-btn" expand="block" (click)="modalClose(false)">Cancel</ion-button>
+                </ion-col> -->
+              </ion-row>
+            </ion-grid>
+
+          </div>
+        </div>
+      </form>
+
+    </ng-template>
+  </ion-modal>
+</ion-content>

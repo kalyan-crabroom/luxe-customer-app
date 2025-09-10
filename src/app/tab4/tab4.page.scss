@@ -1,0 +1,166 @@
+.calendar-body {
+    .cal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-top: 1px solid #fff;
+        border-left: 1px solid #fff;
+        border-right: 1px solid #fff;
+
+        ion-button {
+            --background: transparent;
+            --color: #fff;
+
+            ion-icon {
+                color: #fff;
+            }
+        }
+
+        .month-title {
+            flex: 1 1 0%;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            text-align: center;
+        }
+    }
+
+    calendar {
+        color: #fff;
+    }
+}
+
+// ion-list {
+//     background: transparent;
+
+//     ion-list-header {
+//         padding-left: 0;
+//         ion-label {
+//             margin-top: 0;
+//             color: #fff;
+//             font-size: 18px;
+           
+//         }
+//         ion-buttons{
+//             ion-button{
+//                 --color:#fff;
+//             }
+//         }
+//     }
+
+//     ion-item {
+//         --background: var(--bg-rgb);
+//         --background-hover: var(--bg-rgb);
+//         --background-focus: var(--bg-rgb);
+//         --background-activated: var(--bg-rgb);
+//         --border-width: 1px;
+//         --border-style: solid;
+//         --border-color: var(--border-rgb);
+//         --border-radius: 15px;
+//         --padding-start: 15px;
+//         --padding-end: 15px;
+//         --padding-top: 10px;
+//         --padding-bottom: 10px;
+//         --detail-icon-opacity: 1;
+//         --detail-icon-font-size: 28px;
+//         --inner-padding-end: 0px;
+//         --detail-icon-color: var(--ion-color-white);
+//         margin-bottom: 15px;
+//         ion-label {
+//             h3 {
+//                 font-size: 14px;
+//                 color: var(--ion-color-white);
+//                 font-family: M-Regular !important;
+//                 font-weight: bold;
+//             }
+
+//             p {
+//                 font-size: 14px;
+//                 color: var(--ion-color-light);
+//                 font-family: M-Regular !important;
+//                 // margin-top: 10px;
+//             }
+//         }
+//     }
+// }
+
+.no-found {
+    color: red;
+    text-align: center;
+  }
+
+  .circle {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    white-space: nowrap;
+    .active{
+        .box{
+            background:var(--ion-color-secondary) !important;
+            font-family: M-Bold !important;
+            color: var(--ion-color-white) !important;
+        }
+        .day-name{
+            color: var(--ion-color-white) !important;
+            font-family: M-Bold !important;
+        }
+    }
+    .item-circle{
+        width: 60px;
+        min-width: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        flex-direction: column;
+        gap: 10px;
+       
+        .day-name{
+            color: var(--ion-color-medium);
+            font-size: 14px;
+            text-transform: capitalize;
+            font-family: M-Regular;
+        }
+        .box{
+            height: 60px;
+                width: 60px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid #6e6e70;
+                border-radius: 50%;
+                background:#000026;
+                min-width: 60px;
+                color: #9E9EAC;
+                font-size: 14px;
+                font-family: M-Regular;
+    }
+    
+    }
+}
+.flex-title{
+    font-size: 16px;
+    color: var(--ion-color-white);
+    font-family: M-Regular !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    ion-text{
+        font-family: M-Bold !important;
+        font-size: 13px;
+    }
+}
+.today{
+    font-size: 14px;
+    font-family: M-Regular !important;
+    margin-bottom: 15px;
+    color: var(--ion-color-light) !important;
+}
+
+.view-all{
+    font-size: 13px !important;
+     font-weight: 700 !important;
+    --color:var(--ion-color-white);
+}

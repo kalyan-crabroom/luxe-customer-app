@@ -1,0 +1,140 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>My Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/edit-profile">
+        <ion-icon class="pen" src="assets/icons/edit.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12" class="ion-text-center">
+        <ion-avatar class="profile-img">
+          <img alt="" [src]="userData.profile_image" *ngIf="userData.profile_image" />
+          <img alt="" src="/assets/images/user1-image.jpg" *ngIf="!userData.profile_image" />
+        </ion-avatar>
+        <h4 class="user-name">{{userData.first_name}} {{userData.last_name}}</h4>
+      </ion-col>
+      <ion-col size="12">
+      </ion-col>
+
+      <ion-col size="12">
+        <h4 class="font-19">Favorite Therapists</h4>
+        <div class="ion-text-center ion-padding" *ngIf="!ready">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+        <div *ngIf="ready">
+          <div class="user-thumbnail" *ngIf="favTherapistDetails.length > 0; else noTherapists">
+            <div class="user-thumbnail-col" (click)="goToTherapist(item.user_id)"
+              *ngFor="let item of favTherapistDetails">
+              <div class="thumbnail-custom">
+                <img alt="" class="pic" [src]="item.user_image"
+                  onerror="this.src='/assets/images/image-store-placeholder-logo.png'" />
+                  <ion-icon 
+                  class="gender-icon"  
+                  [ngStyle]="{
+                    'transform': item.gender === 'Male' ? 'rotate(218deg)' : 'rotate(0deg)',
+                    'transition': 'transform 0.3s ease'
+                  }"
+                  src="assets/icons/female.svg">
+                </ion-icon>
+              </div>
+              <p class="font-13">{{item.first_name}} {{item.last_name}}</p>
+            </div>
+          </div>
+          <ng-template #noTherapists>
+            <p class="no-location">No Favorite Therapist Found.</p>
+          </ng-template>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <h1 class="primary-heading">My Location</h1>
+      </ion-col>
+
+
+      <ion-col size="12">
+        <div class="ion-text-center ion-padding" *ngIf="!ready">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+        <div *ngIf="ready && locationData.length == 0">
+          <p class="no-location">No Location Found.</p>
+        </div>
+        <ion-item class="location" lines="none" *ngFor="let locations of locationData;let i = index">
+          <ion-label>
+            <p class="para-1">{{locations.location_name}}</p>
+            <p class="para">
+              {{locations.location_address}}
+              <br>
+            </p>
+          </ion-label>
+          <ion-buttons slot="end" (click)="locationUpdate(i,locations.id)">
+            <ion-button color="light">
+              <ion-icon src="assets/icons/edit.svg"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+          <ion-buttons slot="end" (click)="deleteLocations(i,locations.id)">
+            <ion-button color="light">
+              <ion-icon src="assets/icons/delete.svg"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-item>
+
+      </ion-col>
+
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn" routerLink="/book-now1">Add New Location</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="ion-padding"  [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="primary-heading">Request History <ion-text class="view-all" routerLink="/complete-request-history">View
+            All</ion-text>
+        </h1>
+        <div class="ion-text-center ion-padding" *ngIf="!ready">
+          <ion-spinner color="light"></ion-spinner>
+        </div>
+        <ion-list *ngIf="ready">
+          <ion-item-group *ngFor="let item of bookingHistory" (click)="goToNext(item.booking_id)">
+            <div class="flex-item">
+              <ion-text>{{item.booking_date | date: 'MM/dd/yyyy'}}</ion-text>
+              <ion-text>{{item.booking_start_time}}</ion-text>
+            </div>
+            <ion-item lines="none" class="ion-no-padding">
+              <ion-avatar slot="start" *ngIf="item.therapist_info">
+                <img [src]="item?.therapist_info?.user_image" alt="">
+              </ion-avatar>
+
+              <ion-avatar slot="start" *ngIf="!item.therapist_info">
+                <img src="https://backend.luxetouch.com/assets/user-placeholder.png" alt="">
+              </ion-avatar>
+              <ion-label>
+                <p *ngIf="item.therapist_info">{{item?.therapist_info?.name}}</p>
+                <p *ngIf="!item.therapist_info">Not accepted</p>
+              </ion-label>
+              <ion-text slot="end">
+                {{item?.location_details?.location_name}}
+              </ion-text>
+            </ion-item>
+          </ion-item-group>
+
+          <div *ngIf="ready && bookingHistory.length == 0">
+            <p class="no-location">No Booking Found.</p>
+          </div>
+        </ion-list>
+      </ion-col>
+      <!-- <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn">Invest in Yourself</ion-button>
+      </ion-col> -->
+    </ion-row>
+  </ion-grid>
+</ion-content>

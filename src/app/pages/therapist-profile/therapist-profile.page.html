@@ -1,0 +1,150 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Therapist Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="favouriteTherapist()">
+        <ion-icon name="{{therapist_data.favorite ? 'heart' : 'heart-outline'}}" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding"  [fixed]="true">
+
+    <ion-row *ngIf="is_ready">
+      <ion-col size="12" class="ion-text-center">
+        <ion-spinner color="light"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!is_ready">
+
+      <ion-col size="12" class="ion-text-center">
+        <ion-avatar class="profile-img">
+          <img alt="" [src]="therapist_data.profile_image" onerror="this.src='/assets/images/user1-image.jpg'" />
+          <ion-icon 
+          class="gender-icon"  
+          [ngStyle]="{
+            'transform': therapist_data.gender === 'Male' ? 'rotate(218deg)' : 'rotate(0deg)',
+            'transition': 'transform 0.3s ease'
+          }"
+          src="assets/icons/female.svg">
+        </ion-icon>
+        </ion-avatar>
+        <h4 class="user-name">{{therapist_data?.first_name}} {{therapist_data?.last_name?.charAt(0).toUpperCase() }}</h4>
+
+        <div class="rating">
+          <ng-container *ngIf="therapist_data.average_rating; else noRating">
+            <ng-container *ngFor="let s of starBox; let i = index">
+              <ion-icon name="star" *ngIf="therapist_data.average_rating >= s"></ion-icon>
+              <ng-container *ngIf="therapist_data.average_rating < s">
+                <ion-icon name="star-half" *ngIf="therapist_data.average_rating > (s-1)"></ion-icon>
+                <ion-icon name="star-outline" class="blank-star"
+                  *ngIf="therapist_data.average_rating <= (s-1)"></ion-icon>
+              </ng-container>
+            </ng-container>
+            <ion-text> ({{ therapist_data.average_rating }})</ion-text>
+          </ng-container>
+          <ng-template #noRating>
+            <ng-container *ngFor="let s of starBox">
+              <ion-icon name="star-outline" class="blank-star"></ion-icon>
+            </ng-container>
+          </ng-template>
+        </div>
+      </ion-col>
+
+      <ion-col size="12">
+        <h3 class="section-title" *ngIf="therapist_data.about_me">About Me</h3>
+        <ion-card *ngIf="therapist_data.about_me">
+          <p class="text-light">
+            {{therapist_data.about_me}}</p>
+        </ion-card>
+       
+      </ion-col>
+      <ion-col size="12" size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn ion-margin-top" (click)="goToBook()">Book Now</ion-button>
+      </ion-col>
+      <ion-col size="12" *ngIf="therapist_data?.specialities?.length > 0">
+        <h3 class="section-title mt-15">Specialties</h3>
+        <ion-card class="mb-15" *ngFor="let item of therapist_data.specialities">
+          <p class="text-white">{{item.speciality}}</p>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="!is_ready">
+      <ion-col size="12">
+        <h3 class="section-title mt-15">Gallery</h3>
+      </ion-col>
+      <ion-col size="4" size-lg="3" size-xl="2" *ngFor="let item of therapist_gallery">
+        <div class="gallery-img">
+          <ng-container *ngIf="item.type === 'image'">
+            <img [src]="item.media" alt="Gallery Image" (click)="openMediaModal(item.media, 'image')">
+          </ng-container>
+          <ng-container *ngIf="item.type === 'video'">
+            <div class="video-thumbnail">
+              <img [src]="item.thumbnail" alt="Video Thumbnail" (click)="openMediaModal(item.media, 'video')">
+              <ion-icon name="play-circle" class="play-icon"></ion-icon>
+            </div>
+          </ng-container>
+        </div>
+      </ion-col>
+      <ion-col size="12" class="ion-text-center" *ngIf="therapist_gallery && therapist_gallery.length == 0">
+        <p class="error">No gallery found.</p>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-margin-top">
+      <!-- <ion-col size="12" size-md="6" *ngIf="!is_ready">
+        <ion-button expand="block" class="primary-btn" (click)="goToBook()">Book Now</ion-button>
+      </ion-col> -->
+      <ion-col size="12" size-md="6" offset-md="3" *ngIf="!is_ready">
+        <ion-button expand="block" class="primary-btn" (click)="goToChat()">Message</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-modal [isOpen]="isModalOpen" [backdropDismiss]="false" class="media-modal">
+    <ng-template>
+
+      <div class="modal-container">
+        <ion-button class="close-modal-btn" (click)="setOpen(false)">
+          <ion-icon name="close"></ion-icon>
+        </ion-button>
+        <div class="modal-body">
+          <swiper-container
+          class="media-modal-slider"
+          [loop]="false"
+          [pagination]="true" 
+          [spaceBetween]="0"
+          [slidesPerView]="1"
+          [navigation]="true"
+          pagination-type="fraction"
+          [initialSlide]="currentSlideIndex"
+        >
+            <swiper-slide *ngFor="let item of therapist_gallery">
+              <ng-container *ngIf="item.type === 'image'">
+                <div class="media-container image-post">
+                  <img [src]="item.media" class="videoBg" />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="item.type === 'video'">
+                <div class="media-container video-post">
+                  <video controls class="videoBg" webkit-playsinline playsinline   [poster]="item.thumbnail"  >
+                    <source [src]="item.media" type="video/mp4" />
+                  </video>
+                </div>
+               
+              </ng-container>
+            </swiper-slide>
+          </swiper-container>
+        </div>
+        
+   
+      </div>
+    </ng-template>
+  </ion-modal>
+  
+</ion-content>

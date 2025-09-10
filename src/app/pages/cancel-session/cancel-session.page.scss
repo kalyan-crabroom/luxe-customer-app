@@ -1,0 +1,34 @@
+.circle{
+
+    font-size: 21px;
+}
+
+.para-6{
+
+    color: #CCCCD4;
+    font-size: 13px;
+
+}
+
+.like{
+
+    font-size: 17px;
+}
+
+.primary-btn-outline {
+    --background:transparent !important;
+    --background-activated: transparent !important;
+    --background-hover: transparent !important;
+    --background-focused: transparent !important;
+    --color: var(--ion-color-white) !important;
+    --color-hover: var(--ion-color-white) !important;
+    --color-activated: var(--ion-color-white) !important;
+    --color-focused: var(--ion-color-white) !important;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #9E9EAC;
+    height: 54px;
+    font-size: 15px;
+    --border-radius: 30px;
+    text-transform: uppercase;
+}

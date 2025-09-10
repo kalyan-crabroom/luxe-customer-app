@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Notifications</ion-title>
+    <!-- <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon name="settings"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+ <ion-grid [fixed]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-list class="ion-padding">
+
+    <ion-list-header class="ion-no-padding">
+      <ion-label class="ion-no-margin">Notifications</ion-label>
+      <ion-button class="ion-no-margin" (click)="clearAllAlert()" *ngIf="notificationData && notificationData.length > 0">Clear All</ion-button>
+    </ion-list-header>
+    
+    <div class="spinner-container" *ngIf="showSpinner == 1">
+      <ion-spinner color="light" class="white-spinner"></ion-spinner>
+    </div>
+
+    <ng-container *ngIf="showSpinner == 2 && notificationData.length === 0">
+      <ion-col size="12" class="ion-text-center ion-padding">
+        <div class="no-faqs-found">No Notifications Found.</div>
+      </ion-col>
+    </ng-container>
+
+    <ion-item-sliding *ngFor="let notification of notificationData; let i = index">
+      <ion-item lines="none" (click)="handleNotificationClick(notification)">
+        <ion-label>
+          <h3 class="text-white">{{notification.title}}</h3>
+          <p class="text-light mb-10">{{notification.message}}</p>
+          <p class="text-medium">{{ notification.date_time }}</p>
+        </ion-label>
+        <ion-text *ngIf="notification.status == 0" class="unread"></ion-text>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option color="danger" (click)="deleteAlert(i,notification.id)">
+          <ion-icon slot="icon-only" src="assets/icons/delete.svg"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
+  </ion-list>
+  <ion-infinite-scroll (ionInfinite)="loadMore($event)" *ngIf="notificationData.length < total_notification">
+    <ion-infinite-scroll-content class="white-spinner"></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+ </ion-grid>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+
+    <!-- <ion-buttons slot="end">
+      <ion-button id="messages-trigger">
+        <ion-icon slot="end" name="help-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="messages-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content>
+  <ion-grid [fixed]="true">
+    <ion-row *ngIf="is_ready">
+      <ion-col size="12" class="ion-text-center">
+        <ion-spinner color="light"></ion-spinner>
+      </ion-col>
+    </ion-row>
+    <ion-list class="ion-padding" *ngIf="chatUserList?.length">
+      <ion-item lines="none" class="unread-msg" *ngFor="let item of chatUserList" (click)="chat(item)">
+        <ion-avatar slot="start">
+          <img [src]="item.profile_image" alt="">
+        </ion-avatar>
+        <ion-label class="ion-text-nowrap">
+          <h3>{{item.name}}</h3>
+          <p>{{item.msg}}</p>
+        </ion-label>
+        <ion-text class="time">{{getTimeDifference(item.date)}}</ion-text>
+        <ion-badge class="unread_msg_count" slot="end" *ngIf="item.msgSenderId && item.msgSenderId != logUser.id">{{item.unread}}</ion-badge>
+      </ion-item>
+    </ion-list>
+    <div class="empty_section" *ngIf="isEmpty">
+      <img src="/assets/images/empty_folder.png" style="width: 100px;" />
+      <p>No chat found</p>
+    </div>
+  </ion-grid>
+</ion-content>

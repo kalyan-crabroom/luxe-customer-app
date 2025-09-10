@@ -1,0 +1,99 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>REVIEW THERAPIST</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="sessionComplete" (ngSubmit)="onSubmit(sessionComplete.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row>
+        <ion-col size="12">
+          <!-- <h1 class="page-title mb-20">Session Complete</h1> -->
+          <h1 class="page-title mb-20">REVIEW THERAPIST</h1>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-list>
+            <ion-item-group>
+
+              <ion-item lines="none" class="ion-no-padding" (click)="goToTherapist(sessionDetails?.therapist_info?.user_id)">
+                <ion-avatar slot="start">
+                  <img [src]="sessionDetails?.therapist_info?.user_image"
+                    *ngIf="sessionDetails?.therapist_info?.user_image" alt="" />
+                  <img src="/assets/images/user1-image.jpg"
+                    *ngIf="!sessionDetails?.therapist_info?.user_image" alt="" />
+                </ion-avatar>
+                <ion-label>
+                  <p>{{sessionDetails?.therapist_info?.name}}</p>
+                </ion-label>
+              </ion-item>
+            </ion-item-group>
+          </ion-list>
+        </ion-col>
+
+        <ion-row>
+          <ion-col size="12">
+            <h6 class="paragraph">Your Rating</h6>
+          </ion-col>
+        </ion-row>
+
+        <ion-col size="12">
+          <ion-card>
+            <p class="star">
+              <ion-text *ngFor="let star of [0,1,2,3,4]" (click)="selectRate(star)">
+                <span *ngIf="rate >= star + 1">
+                  <ion-icon name="star" size="large"></ion-icon>
+                </span>
+                <span *ngIf="rate < star + 1">
+                  <ion-icon name="star-outline" size="large"></ion-icon>
+                </span>
+              </ion-text>
+              <input type="hidden" formControlName="rating"/>
+            </p>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="12">
+
+          <ion-item lines="none" class="field">
+            <ion-textarea rows="7" placeholder="Enter Messagae" formControlName="message"></ion-textarea>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.message">
+            <span class="err"
+              *ngIf="sessionComplete.controls['message'].hasError(validation.type) && (sessionComplete.controls['message'].dirty || sessionComplete.controls['message'].touched)">
+              <ion-icon class="erricon" name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </span>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12">
+          <h1 class="section-titel mb-15 mt-15">Select Compliments</h1>
+          <div class="check-box-group">
+            <div class="checkBox" *ngFor="let compliment of compliments">
+              <ion-checkbox (ionChange)="toggleCompliment(compliment)" [checked]="isComplimentSelected(compliment)">
+                {{ compliment }}
+              </ion-checkbox>
+            </div>
+          </div>
+        </ion-col>
+
+        <ion-col size="12" size-md="6">
+          <ion-button expand="block" class="primary-btn" type="submit" >Submit</ion-button>
+          <!-- [disabled]="!sessionComplete.valid" -->
+        </ion-col>
+
+        <ion-col size="12" size-md="6" >
+          <ion-button class="primary-btn-outline" expand="block" routerLink='/selected-session'>Skip</ion-button>
+        </ion-col>
+
+        <ion-col size="12" class="ion-text-center mt-20 mb-20">
+          <ion-text class="text-link" (click)="goToReport()">Report Therapist</ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

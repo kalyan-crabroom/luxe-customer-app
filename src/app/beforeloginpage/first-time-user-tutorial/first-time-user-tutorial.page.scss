@@ -1,0 +1,37 @@
+ion-card{
+    background: rgb(0, 0, 38, 0.4);
+    // padding: 40px 30px;
+    padding: 15px;
+    margin: 0;
+    border: 1px solid var(--ion-color-light);
+    border-radius: 12px;
+    box-shadow: none;
+    text-align: center;
+    .icon{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        border: 2px solid #fff;
+        ion-icon{
+            color: #fff;
+                font-size: 32px;
+              
+        }
+    }
+    h3{
+        font-size: 16px;
+        color: var(--ion-color-white);
+        font-family: M-Regular !important;
+    }
+
+    p{
+        font-size: 14px;
+        color: var(--ion-color-light);
+        font-family: M-Regular !important;
+        margin-bottom: 0;
+    }
+} 

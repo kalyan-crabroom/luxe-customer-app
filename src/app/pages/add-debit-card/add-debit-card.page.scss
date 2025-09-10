@@ -1,0 +1,59 @@
+.modal-center {
+    --backdrop-opacity: 0.9;
+
+    ion-content {
+        --background: transparent !important;
+        background: transparent !important;
+
+        .flex-grid-modal {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 40px;
+            color: #fff;
+            text-align: center;
+            @media screen and (min-width:768px) {
+                height: auto;
+            }
+            ion-icon {
+                color: var(--ion-color-success);
+                font-size: 56px;
+            }
+
+            h1 {
+                font-size: 22px;
+                font-family: M-Bold !important;
+                color: var(--ion-color-white) !important;
+            }
+
+            p {
+                font-size: 16px;
+                font-family: M-Regular !important;
+                color: var(--ion-color-light) !important;
+            }
+        }
+    }
+
+    &::part(content) {
+        background: transparent;
+    }
+}
+
+.primary-btn-outline {
+    --background:transparent !important;
+    --background-activated: transparent !important;
+    --background-hover: transparent !important;
+    --background-focused: transparent !important;
+    --color: var(--ion-color-white) !important;
+    --color-hover: var(--ion-color-white) !important;
+    --color-activated: var(--ion-color-white) !important;
+    --color-focused: var(--ion-color-white) !important;
+    --border-width: 1px;
+    --border-style: solid;
+    --border-color: #9E9EAC;
+    height: 54px;
+    font-size: 18px;
+    --border-radius: 30px;
+    text-transform: uppercase;
+}

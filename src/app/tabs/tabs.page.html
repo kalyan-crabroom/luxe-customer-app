@@ -1,0 +1,36 @@
+<ion-tabs>
+
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" href="/tabs/home">
+      <ion-icon aria-hidden="true" name="home"></ion-icon>
+      <ion-label>Home</ion-label>
+    </ion-tab-button>
+
+    <!-- <ion-tab-button tab="myaccount" href="/tabs/myaccount">
+      <ion-icon name="person-circle"></ion-icon>
+      <ion-label>My Account</ion-label>
+    </ion-tab-button> -->
+
+    <!-- <ion-tab-button tab="messages" href="/tabs/messages">
+      <ion-icon name="chatbubbles"></ion-icon>
+      <ion-label>Messages</ion-label>
+    </ion-tab-button> -->
+
+    <ion-tab-button tab="messages" href="/tabs/messages">
+      <ion-icon name="chatbubbles"></ion-icon>
+      <ion-label>Messages</ion-label>
+      <ion-text class="message-badge" *ngIf="unreadchat > 0"> {{ unreadchat > 9 ? '9+' : unreadchat }} </ion-text>
+    </ion-tab-button>
+
+    <ion-tab-button tab="notifications" href="/tabs/notifications">
+      <ion-icon [ngClass]="{'notifications-badge': totalNotification_count > 0 }" name="notifications"></ion-icon>
+      <ion-label>Notifications</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button tab="more" href="/tabs/more">
+      <ion-icon name="menu"></ion-icon>
+      <ion-label>More</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+
+</ion-tabs>

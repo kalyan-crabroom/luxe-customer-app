@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Background Check</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ 
+  <form [formGroup]="editBackgroundCheckForm" (ngSubmit)="onSubmit()" >
+    <ion-grid class="ion-padding">
+     <ion-row>
+       <ion-col size="12">
+         <h1 class="page-title mb-20">Create an account</h1>
+       </ion-col>
+      <ion-col size="12">
+       <p class="filed-label">Upload Drivers License Picture</p>
+       <div class="upload-box">
+         <div class="col-grid">
+           <div class="upload-doc">
+             <img *ngIf="frontLicanceImage" [src]="frontLicanceImage" />
+             <ion-icon *ngIf="frontLicanceImage" class="close" name="close-circle" (click)="removeImage('license_front')"></ion-icon>
+             <ion-text (click)="presentActionSheet('license_front')">
+               <ion-icon *ngIf="!frontLicanceImage" name="camera"></ion-icon>
+               <p>Front</p>
+               <p *ngIf="uploadInProgress && 'license_front' == uploadingFileType">{{uploadProgress}}%</p>
+             </ion-text>
+             <input type="file" (change)="uploadDocFile($event, 'license_front')" accept="image/*" id="front_license" style="display: none;"/>
+             
+           </div>
+         </div>
+   
+         <div class="col-grid">
+           <div class="upload-doc">
+             <img *ngIf="backLicanceImage" [src]="backLicanceImage" />
+             <ion-icon *ngIf="backLicanceImage" class="close" name="close-circle" (click)="removeImage('license_back')"></ion-icon>
+             <ion-text (click)="presentActionSheet('license_back')">
+               <ion-icon *ngIf="!backLicanceImage" name="camera"></ion-icon>
+               <p>Back</p>
+               <p *ngIf="uploadInProgress && 'license_back' == uploadingFileType">{{uploadProgress}}%</p>
+             </ion-text>
+             <input type="file" (change)="uploadDocFile($event, 'license_back')" accept="image/*" id="back_license" style="display: none;" />
+           </div>
+         </div>
+       </div>
+      </ion-col>
+   
+      <ion-col size="12">
+       <p class="filed-label">Social Security Number</p>
+       <ion-item lines="none" class="field mb-20">
+         <ion-icon name="shield" slot="start"></ion-icon>
+         <ion-input type="text" placeholder="XXX-XXX-XXX" maxlength="9" formControlName="SocialSecurityNumber" inputmode="numeric" pattern="[0-9]*"></ion-input>
+       </ion-item>
+      </ion-col>
+   
+      <ion-col size="12">
+       <p class="filed-label">Upload Document of Massage Certification</p>
+       <div class="upload-box">
+         <div class="col-grid">
+           <div class="upload-doc">
+             <img *ngIf="massageCertification" [src]="massageCertification" />
+             <ion-icon *ngIf="massageCertification" class="close" name="close-circle" (click)="removeImage('massage_certification')"></ion-icon>
+             <ion-text (click)="presentActionSheet('massage_certification')">
+               <ion-icon *ngIf="!massageCertification" name="camera"></ion-icon>
+               <p>Add Photo</p>
+               <p *ngIf="uploadInProgress && 'massage_certification' == uploadingFileType">{{uploadProgress}}%</p>
+             </ion-text>
+             <input type="file" (change)="uploadDocFile($event, 'massage_certification')" accept="image/*" id="certification_massage" style="display: none;" />
+           </div>
+         </div>
+       </div>
+      </ion-col>
+   
+      <ion-col size="12">
+       <p class="filed-label">Upload Proof of Massage Insurance</p>
+       <div class="upload-box">
+         <div class="col-grid">
+           <div class="upload-doc">
+             <img *ngIf="massageInsurance" [src]="massageInsurance" />
+             <ion-icon *ngIf="massageInsurance" class="close" name="close-circle" (click)="removeImage('massage_insurance')"></ion-icon>
+             <ion-text (click)="presentActionSheet('massage_insurance')">
+               <ion-icon *ngIf="!massageInsurance" name="camera"></ion-icon>
+               <p>Add Photo</p>
+               <p *ngIf="uploadInProgress && 'massage_insurance' == uploadingFileType">{{uploadProgress}}%</p>
+               <!-- <ion-progress-bar *ngIf="uploadInProgress && 'massage_insurance' == uploadingFileType" color="success" [value]="uploadProgress"></ion-progress-bar> -->
+             </ion-text>
+             <input type="file" (change)="uploadDocFile($event, 'massage_insurance')" accept="image/*" id="insurance_massage" style="display: none;" />
+           </div>
+         </div>
+       </div>
+      </ion-col>
+   
+      <ion-col size="12">
+       <p class="filed-label">Do you agree to having a background check?</p>
+       <ion-radio-group value="strawberries" mode="md" formControlName="BackgroundCheck">
+         <ion-radio labelPlacement="end" value="yes">Yes</ion-radio><br />
+         <ion-radio labelPlacement="end" value="no">No</ion-radio><br />
+       </ion-radio-group>
+      </ion-col>
+   
+   
+      <ion-col size="12">
+       <ion-button type="submit" expand="block" class="primary-btn mt-20" [disabled]="submitDisabled">SUBMIT</ion-button>
+      </ion-col>
+     </ion-row>
+   </ion-grid>
+   </form>
+
+</ion-content>

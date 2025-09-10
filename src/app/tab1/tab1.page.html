@@ -1,0 +1,99 @@
+<ion-content>
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
+    <div class=" bg-card">
+        <ion-grid class="ion-padding-horizontal" [fixed]="true">
+            <ion-row>
+                <ion-col size="12">
+                    <div class="mb-100">
+                        <h2 class="mt-0 mb-0 font-23">Welcome, {{logUser?.first_name}}!</h2>
+                        <div class="flexAdd">
+                            <h1 class="font-23 mb-0 mt-0">{{ wallet_amount | currency}}</h1>
+                            <ion-icon name="add-circle" routerLink="/wallet"></ion-icon>
+                        </div>
+
+                        <p class="font-13 mb-0 mt-0">Luxe Touch Credits</p>
+                    </div>
+
+                    <ion-button expand="block" class="primary-btn mt-20" routerLink="/book-now">Book Now!</ion-button>
+                    <ion-spinner color="light" class="white-spinner" *ngIf="is_sub"></ion-spinner>
+                    <p [innerHTML]="homeData?.content" *ngIf="homeData" class="home-content"></p>
+                    <!-- <ng-container *ngIf="!is_sub && subscriptionDetails?.subscription_status !='active'">
+                        <p class="font-13 mt-15 mb-0">Consistent massage improves sleep,
+                            decreases stress, and helps manage chronic pain.
+                            Enroll in our exclusive monthly membership
+                            to elevate your health to luxurious heights.
+                        </p>
+                      
+                        <ion-button expand="block" class="primary-btn mt-15" (click)="goToSubscriptionPage()">Invest in your
+                            health</ion-button>
+                    </ng-container> -->
+
+                    <ion-button expand="block" class="primary-btn mt-15" (click)="goToGiftCard()">Purchase Gift
+                        Card</ion-button>
+                </ion-col>
+
+                <!-- <ion-col size="12" class="ion-text-center" *ngIf="is_sub">
+                    <ion-spinner color="light"></ion-spinner>
+                </ion-col> -->
+
+            </ion-row>
+        </ion-grid>
+    </div>
+
+    <ion-grid class="ion-padding" [fixed]="true">
+        <ion-row>
+            <ion-col size="12">
+                <h1 class="primary-heading">Scheduled Requests <ion-text class="cursor-pointer"
+                        routerLink="/booking-details">View
+                        All</ion-text></h1>
+                <ion-list>
+                    <div class="ion-text-center ion-padding" *ngIf="!ready">
+                        <ion-spinner color="light"></ion-spinner>
+                    </div>
+                    <div *ngIf="ready && bookingData.length == 0">
+                        <p class="no-location">No Request Found.</p>
+                    </div>
+                    <ion-item-group *ngFor="let data of bookingData" (click)="goToNext(data.id)">
+                        <div class="flex-item">
+                            <ion-text>{{data.booking_date | date: 'MM/dd/yyyy'}}</ion-text>
+                            <ion-text>{{data.booking_start_time}}</ion-text>
+                        </div>
+
+                        <ion-item lines="none" class="ion-no-padding">
+                            <ng-container *ngIf="!data.therapist_info">
+                                <ion-avatar slot="start">
+                                    <img alt="" [src]="data?.user_placeholder_img"
+                                        onerror="this.src='/assets/images/user1-image.jpg'" />
+                                </ion-avatar>
+                                <ion-label>
+                                    <!-- <p>Not accepted</p> -->
+                                    <p>Pending</p>
+                                </ion-label>
+                            </ng-container>
+
+                            <ng-container *ngIf="data.therapist_info">
+                                <ion-avatar slot="start">
+                                    <img alt="" [src]="data?.therapist_info?.user_image"
+                                        onerror="this.src='/assets/images/user1-image.jpg'" />
+                                </ion-avatar>
+                                <ion-label>
+                                    <p>{{data.therapist_info?.first_name}} {{
+                                        data.therapist_info?.last_name?.charAt(0).toUpperCase() }}</p>
+                                </ion-label>
+                            </ng-container>
+
+                            <ion-text slot="end" *ngIf="data?.location_details?.location_name">
+                                {{data?.location_details?.location_name}}
+                            </ion-text>
+                        </ion-item>
+                    </ion-item-group>
+                </ion-list>
+            </ion-col>
+            <!-- <ion-col size="12">
+                <ion-button expand="block" class="primary-btn">Invest in Yourself</ion-button>
+            </ion-col> -->
+        </ion-row>
+    </ion-grid>
+</ion-content>

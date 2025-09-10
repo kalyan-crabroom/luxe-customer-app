@@ -1,0 +1,73 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>Cancel Session</ion-title>
+    <!-- <ion-icon class="circle" slot="end" name="help-circle" id="cancel-help-trigger" *ngIf="helptext"></ion-icon> -->
+  </ion-toolbar>
+
+
+  <!-- <ion-popover trigger="cancel-help-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="cancelForm" (ngSubmit)="cancelSession(cancelForm.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+
+      <ion-row>
+
+        <ion-col size="12">
+          <h1 class="page-title mb-20 text-white">Cancel Session</h1>
+        </ion-col>
+
+        <ion-col size="12">
+          <ion-item lines="none" class="field">
+            <ion-textarea rows="7" placeholder="Enter Reason for Cancellation" formControlName="reason" appCapitalizeFirst></ion-textarea>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.reason">
+            <p class="err"
+              *ngIf="cancelForm.get('reason')?.hasError(validation.type) && (cancelForm.get('reason')?.dirty || cancelForm.get('reason')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-row>
+
+          <ion-col size="12">
+            <h3 class="text-white section-title">Cancellation Policy</h3>
+            <p class="para-6" [innerHTML]="cancellationPolicyData.content" *ngIf="cancellationPolicyData?.content"></p>
+          </ion-col>
+          <ion-col size="12" class="ion-text-center" *ngIf="showSpinner">
+            <ion-spinner color="light" class="white-spinner" ></ion-spinner>
+          </ion-col>
+
+        </ion-row>
+
+        <ion-col size="12">
+          <h3 class="section-title text-white">Would you like to cancel this session?</h3>
+        </ion-col>
+
+        <ion-col size="12" size-md="6">
+          <ion-button expand="block" class="primary-btn" (click)="back()">NO, KEEP THIS SESSION</ion-button>
+        </ion-col>
+
+        <ion-col size="12" size-md="6">
+          <ion-button class="primary-btn-outline" type="submit" expand="block" [disabled]="!cancelForm.valid">YES,
+            CANCEL THIS SESSION</ion-button>
+        </ion-col>
+
+      </ion-row>
+
+    </ion-grid>
+  </form>
+</ion-content>

@@ -1,0 +1,61 @@
+<ion-content>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+    <ion-grid class="full-vh table-grid p-0-pwa-login">
+      <div  class="w-full ion-padding-horizontal  bg-image banner bg-image-pwa">
+        <ion-row>
+          <ion-col size="12" class="ion-text-center">
+            <img class="logo" src="assets/logo/luxe-touch-logo-01.png" alt="">
+          </ion-col>
+        </ion-row>
+      </div>
+     
+      <div class="w-full ion-padding bg-box form-grid">
+        <ion-row class="max-w-500">
+
+          <ion-col size="12">
+  
+            <ion-item lines="none" class="field mb-5">
+              <ion-icon name="mail" slot="start"></ion-icon>
+              <ion-input type="text" placeholder="Enter Email Address" formControlName="email"></ion-input>
+            </ion-item>
+            <ng-container *ngFor="let validation of validation_messages.email">
+              <p class="err"
+                *ngIf="loginForm.get('email')?.hasError(validation.type) && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+              </p>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12">
+            <ion-item lines="none" class="field mb-0">
+              <ion-icon name="lock-closed" slot="start"></ion-icon>
+              <ion-input [type]="passwordType" placeholder="Enter Password" formControlName="password"></ion-input>
+              <ion-icon [name]="passwordIcon" (click)="hideShowPassword()" slot="end" class="eye"></ion-icon>
+            </ion-item>
+            <ng-container *ngFor="let validation of validation_messages.password">
+              <p class="err"
+                *ngIf="loginForm.get('password')?.hasError(validation.type) && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                <ion-icon name="information-circle-outline"></ion-icon>{{ validation.message }}
+              </p>
+            </ng-container>
+          </ion-col>
+          <ion-col size="12" class="mt-15 mb-15">
+            <div class="flex-div">
+              <ion-checkbox class="checkbox-custom" labelPlacement="end" [(ngModel)]="remember_me"
+                [ngModelOptions]="{standalone: true}">Remember Me</ion-checkbox>
+              <ion-text [routerLink]="[ '/forgot-password']">Forgot Password?</ion-text>
+            </div>
+          </ion-col>
+          <ion-col size="12">
+            <ion-button type="submit" expand="block" class="primary-btn" [disabled]="!loginForm.valid">Sign
+              in</ion-button>
+          </ion-col>
+          <ion-col size="12">
+            <p class="text-light font-14 mt-15 ion-text-center">New to Luxe Touch?<ion-text class="text-yellow font-900 text-uppercase"
+                [routerLink]="[ '/create-account']"> Sign Up</ion-text></p>
+          </ion-col>
+  
+        </ion-row>
+      </div>
+    </ion-grid>
+  </form>
+</ion-content>

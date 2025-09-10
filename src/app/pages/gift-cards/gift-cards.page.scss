@@ -1,0 +1,99 @@
+ion-list {
+    background: transparent;
+
+    ion-item-group {
+        // background: #000026;
+        background: #211a5a;
+        padding: 16px 16px;
+        margin: 0;
+        border: 1px solid var(--ion-color-light);
+        border-radius: 8px;
+        margin-bottom: 15px;
+
+
+
+        ion-item {
+            --background: transparent;
+            align-items: flex-start;
+            // --padding-end:10px;
+            ion-label {
+                margin-top: 0;
+                margin-bottom: 0;
+
+                h1 {
+                    font-size: 16px;
+                    font-weight: 700;
+                    // color: gold;
+                    color: var(--ion-color-white);
+                    margin-bottom: 7px;
+                }
+
+                h3 {
+                    font-size: 14px;
+                    font-weight: 700;
+                    color: var(--ion-color-white);
+                    margin-bottom: 7px;
+                }
+
+                p {
+                    font-size: 14px;
+
+                    color: var(--ion-color-white);
+                }
+            }
+
+            .end-item {
+                font-size: 14px;
+                color: var(--ion-color-white);
+                margin-right: -16px;
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                text-align: right;
+
+                ion-text {
+                    font-weight: 700;
+                }
+            }
+        }
+    }
+}
+
+.no-location {
+    color: #ffc000;
+    text-align: center;
+}
+
+.primary-heading {
+    color: #fff;
+    font-size: 19px;
+    margin-bottom: 20px;
+    margin-top: 0px;
+    font-family: M-Medium;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    ion-text {
+        font-size: 13px;
+        text-decoration: underline;
+        font-family: M-Regular;
+    }
+}
+
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+ion-badge {
+    padding: 7px;
+    --color: #ffff;
+    font-size: 12px;
+  }
+
+  .purchased{
+    color: #ffff;
+  }

@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>News</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <div class="spinner-container" *ngIf="ready == 1">
+        <ion-spinner color="light"></ion-spinner>
+      </div>
+      <ng-container *ngIf="ready == 2 && news.length === 0">
+        <ion-col size="12" class="ion-text-center ion-padding">
+          <div class="no-faqs-found">Not Found.</div>
+        </ion-col>
+      </ng-container>
+      <ion-col size="12">
+        <ion-list>
+          <ion-card *ngFor="let item of news">
+            <h1>{{item?.title}}</h1>
+            <p class="date">{{ item?.created_at | date:'MMMM dd, yyyy' }}</p>
+            <p class="content-text" [innerHtml]="item?.content"></p>
+          </ion-card>
+
+          <ion-infinite-scroll color="light" (ionInfinite)="loadMore($event)" *ngIf="news.length < total">
+            <ion-infinite-scroll-content color="light"></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

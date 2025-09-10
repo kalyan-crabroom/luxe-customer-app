@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Emergency Contact</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content class="ion-padding">
+
+  <ion-grid [fixed]="true">
+    <h2 class="section-title mt-0">Emergency Contact</h2>
+    <p class="text-gold">For emergencies, call 911.</p>
+    <ion-item lines="none" detail="false" type="button" href="tel:911" class="call-item">
+      <ion-icon slot="start" name="call"></ion-icon>
+      <ion-label>Call</ion-label>
+      <ion-note slot="end">911</ion-note>
+    </ion-item>
+  </ion-grid>
+
+</ion-content>

@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Buy Massage or Add Funds</ion-title>
+    <ion-buttons slot="end">
+      <ion-button>
+        <ion-icon src="assets/icons/help-circle.svg"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-list-header class="ion-no-padding">
+            <ion-label class="ion-no-margin">Buy a Massage</ion-label>
+          </ion-list-header>
+          <ion-radio-group>
+            <ion-item lines="none">
+              <ion-label>
+                <h3 class="text-white mb-10">Service Name Example</h3>
+                <p class="text-light mb-10">$123.45</p>
+                <p class="text-light">Lorem ipsum dolor sit amet consectetur. Augue habitant magna purus risus enim
+                  commodo posuere netus.</p>
+              </ion-label>
+              <ion-radio slot="end" mode="md"></ion-radio>
+            </ion-item>
+
+            <ion-item lines="none" class="active">
+              <ion-label>
+                <h3 class="text-white mb-10">Service Name Example</h3>
+                <p class="text-light mb-10">$123.45</p>
+                <p class="text-light">Lorem ipsum dolor sit amet consectetur. Augue habitant magna purus risus enim
+                  commodo posuere netus.</p>
+              </ion-label>
+              <ion-radio slot="end" mode="md"></ion-radio>
+            </ion-item>
+
+
+            <ion-item lines="none">
+              <ion-label>
+                <h3 class="text-white mb-10">Service Name Example</h3>
+                <p class="text-light mb-10">$123.45</p>
+                <p class="text-light">Lorem ipsum dolor sit amet consectetur. Augue habitant magna purus risus enim
+                  commodo posuere netus.</p>
+              </ion-label>
+              <ion-radio slot="end" mode="md"></ion-radio>
+            </ion-item>
+          </ion-radio-group>
+        </ion-list>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <p class="filed-label">This is for</p>
+        <ion-item lines="none" class="field relative-item">
+          <ion-select toggleIcon="">
+            <ion-select-option>Myself / Guest</ion-select-option>
+            <ion-select-option>Myself / Guest</ion-select-option>
+            <ion-select-option>Myself / Guest</ion-select-option>
+          </ion-select>
+          <ion-icon class="icon-right" name="caret-down-outline"></ion-icon>
+        </ion-item>
+      </ion-col>
+      <ion-col size="12">
+        <p class="filed-label">(If Guest) Guest’s Email Address</p>
+        <ion-item lines="none" class="field">
+          <ion-icon slot="start" name="mail"></ion-icon>
+          <ion-input placeholder="Guest's Email Address"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col size="12"  size-md="6" offset-md="3" class="ion-margin-top">
+        <ion-button expand="block" class="primary-btn">Checkout</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>

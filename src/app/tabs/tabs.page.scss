@@ -1,0 +1,54 @@
+ion-tab-button {
+    --background: #000026;
+    --color: var(--ion-color-light);
+    --color-selected: var(--ion-color-white);
+    font-family: M-Regular !important;
+}
+
+ion-tab-bar {
+    background: #000026;
+    border-top: 1px solid var(--ion-color-light);
+    height: 77px;
+}
+
+.message-badge {
+    display: flex;
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    background: gold;
+    top: 12px;
+    right: 13px;
+    color: #000;
+    font-size: 12px;
+    align-items: center;
+    justify-content: center;
+}
+
+.notifications-badge {
+    position: relative;
+
+    &::after {
+        content: '';
+        display: flex;
+        position: absolute;
+        height: 10px;
+        width: 10px;
+        border-radius: 50%;
+        background: gold;
+        top: 0;
+        right: 0;
+        color: #000;
+        font-size: 12px;
+        align-items: center;
+        justify-content: center;
+    }
+
+}
+
+@media only screen and (min-width: 991px) {
+    .message-badge {
+        right: 88px;
+    }
+}

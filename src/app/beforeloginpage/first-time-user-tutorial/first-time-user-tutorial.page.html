@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>HOW IT WORKS</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid class="ion-padding" [fixed]="true">
+    <ion-row>
+      <ion-col size="12">
+        <h1 class="page-title">It's Quick and Simple!</h1>
+      </ion-col>
+
+      <ion-col size="12">
+        <ion-card class="mb-15">
+          <ion-text class="icon">
+            <ion-icon src="assets/icons/massage-table-icon.svg"></ion-icon>
+          </ion-text>
+          <h3 class="mt-10 mb-10">Choose a Massage Type</h3>
+          <p class="m-0">Select your desired massage modality and duration of relaxation.</p>
+        </ion-card>
+        <ion-card class="mb-15">
+          <ion-text class="icon">
+            <ion-icon src="assets/icons/todaay.svg"></ion-icon>
+          </ion-text>
+          <h3 class="mt-10 mb-10">Set a Location and Time</h3>
+          <p class="m-0">We stand ready to serve from 8 am
+          to midnight, whether you're home or away.</p>
+        </ion-card>
+        <ion-card class="mb-15">
+          <ion-text class="icon">
+            <ion-icon src="assets/icons/shield-checkmark.svg"></ion-icon>
+          </ion-text>
+          <h3 class="mt-10 mb-10">Relax. Unwind. Renew.</h3>
+          <p class="m-0">Delight in the Art of Touch and take your health to new heights of luxury.</p>
+        </ion-card>
+      </ion-col>
+
+      <ion-col size="12"  size-md="6" offset-md="3">
+        <ion-button expand="block" class="primary-btn" routerLink="/tabs/home">Continue</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

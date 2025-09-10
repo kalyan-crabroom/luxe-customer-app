@@ -1,0 +1,107 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="showButton">
+      <ion-back-button text="" defaultHref="/" icon="assets/icons/back-btn-arrow.svg"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Preferences</ion-title>
+    <!-- <ion-icon slot="end" class="question" name="help-circle" id="preferences-trigger" *ngIf="helptext"></ion-icon> -->
+  </ion-toolbar>
+
+  <!-- <ion-popover trigger="preferences-trigger" triggerAction="click">
+    <ng-template>
+      <ion-content class="ion-padding">
+        <p class="text-white help-text" [innerHTML]="helptext.content"></p>
+      </ion-content>
+    </ng-template>
+  </ion-popover> -->
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="preferences" (ngSubmit)="onSubmit(preferences.value)">
+    <ion-grid class="ion-padding" [fixed]="true">
+      <ion-row>
+        <ion-col size="12">
+          <p class="filed-label">Pressure Level</p>
+          <ion-item lines="none" class="field relative-item">
+            <ion-select class="select" placeholder="Select Pressure Level" formControlName="pressurelevel"
+              toggleIcon="">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+              <ion-select-option value="6">6</ion-select-option>
+              <ion-select-option value="7">7</ion-select-option>
+              <ion-select-option value="8">8</ion-select-option>
+              <ion-select-option value="9">9</ion-select-option>
+              <ion-select-option value="10">10</ion-select-option>
+            </ion-select>
+            <ion-icon class="icon-right" name="caret-down-outline"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.pressurelevel">
+            <p class="err"
+              *ngIf="preferences.get('pressurelevel')?.hasError(validation.type) && (preferences.get('pressurelevel')?.dirty || preferences.get('pressurelevel')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+         
+        </ion-col>
+
+
+        <ion-col size="12">
+          <ion-item class="place ion-no-padding mb-5" lines="none">
+            <ion-toggle class="music" slot="end" labelPlacement="start" formControlName="music">Music</ion-toggle>
+          </ion-item>
+        </ion-col>
+
+        <ion-col size="12">
+          <p class="filed-label">Communication Level</p>
+          <ion-item class="select" lines="none" class="field relative-item">
+            <ion-select placeholder="Select Communication Level" formControlName="communicationlevel" toggleIcon="">
+              <ion-select-option value="None">None</ion-select-option>
+              <ion-select-option value="Little">Little</ion-select-option>
+              <ion-select-option value="Chatty">Chatty</ion-select-option>
+            </ion-select>
+            <ion-icon class="icon-right" name="caret-down-outline"></ion-icon>
+          </ion-item>
+          <ng-container *ngFor="let validation of validation_messages.communicationlevel">
+            <p class="err"
+              *ngIf="preferences.get('communicationlevel')?.hasError(validation.type) && (preferences.get('communicationlevel')?.dirty || preferences.get('communicationlevel')?.touched)">
+              <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+            </p>
+          </ng-container>
+        </ion-col>
+
+        <ion-col size="12" size-md="6" offset-md="3" *ngIf="!showButton1">
+          <ion-button expand="block" class="primary-btn" type="submit"
+            [disabled]="preferences.invalid">Submit</ion-button>
+
+        </ion-col>
+        <ion-col size="12" size-md="6" offset-md="3" *ngIf="showButton1">
+          <ion-button expand="block" class="primary-btn" type="submit"
+            [disabled]="preferences.invalid">NEXT</ion-button>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid>
+  </form>
+
+  <ion-modal [isOpen]="isModalOpen" class="modal-center" [backdropDismiss]="false">
+    <ng-template>
+      <ion-content>
+        <ion-grid class="flex-grid-modal">
+          <ion-row>
+            <ion-col size="12">
+              <ion-icon src="assets/icons/pop-up.svg"></ion-icon>
+              <h1>Thank You</h1>
+              <p>{{responseMessage}}</p>
+              <ion-button expand="block" class="primary-btn" (click)="goToLogin()">Ok</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>
