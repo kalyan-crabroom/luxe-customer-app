@@ -119,40 +119,18 @@
           </div>
           <input type="file" (change)="onFileSelected($event)" #fileInput accept="video/*" [hidden]="true" style="display: none;" />
 
-          <div class="col-custom" *ngFor="let item of user_data.gallery_images;let i=index">
-            <div class="user-thumbnail-col">
-              <div class="thumbnail-custom">
-                <!-- Conditionally render image or video thumbnail -->
-                <ng-container *ngIf="item.type === 'image'">
-                  <img alt="" class="pic" [src]="item.media" (click)="openMediaModal(item.media, 'image')" />
-                </ng-container>
-                <ng-container *ngIf="item.type === 'video'">
-                  <div class="video-thumbnail">
-                    <!-- <video #video controls class="thumbnail-pic" (click)="openMediaModal(item.media, 'video')">
-                      <source [src]="item.media" type="video/mp4">
-                    </video> -->
-                    <img alt="" class="thumbnail-pic" [src]="item.thumbnail"
-                      (click)="openMediaModal(item.thumbnail, 'video')" />
-                    <ion-icon name="play-circle" (click)="openMediaModal(item.media, 'video')"
-                      class="play-icon"></ion-icon>
-                  </div>
-                </ng-container>
-                <ion-icon class="trash" name="trash-outline" (click)="deleteGalaryImage(item,i)"></ion-icon>
-              </div>
-            </div>
-          </div>
-        </div>
-      </ion-col>
-      <ion-col size="12">
-        <ion-list class="list-style">
-          <ion-list-header class="ion-padding-vertical ion-no-padding">
-            <ion-label class="ion-no-margin">Completed Appointments</ion-label>
-            <ion-button class="ion-no-margin view-all" routerLink="/completed-appointments">VIEW
-              ALL</ion-button>
-          </ion-list-header>
-          <div class="ion-text-center ion-padding" *ngIf="!ready">
-            <ion-spinner color="light"></ion-spinner>
-          </div>
+              <ion-avatar slot="start" *ngIf="!item.therapist_info">
+                <img src="https://backend.luxetouch.com/assets/user-placeholder.png" alt="">
+              </ion-avatar>
+              <ion-label>
+                <p *ngIf="item.therapist_info">{{item?.therapist_info?.name}}</p>
+                <p *ngIf="!item.therapist_info">Not accepted</p>
+              </ion-label>
+              <ion-text slot="end">
+                {{item?.location_details?.location_name}}
+              </ion-text>
+            </ion-item>
+          </ion-item-group>
 
           <ion-item lines="none" detail="false" *ngFor="let item of completedBooking" (click)="goToBooking(item)">
             <ion-label *ngIf="item?.payment_detail_therapist">

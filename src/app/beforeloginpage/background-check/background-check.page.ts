@@ -256,16 +256,73 @@ export class BackgroundCheckPage implements OnInit {
       await this.commonService.presentAlert("Please upload the driver's license front.");
       return;
     }
-    if (!this.document_file_back) {
-      await this.commonService.presentAlert("Please upload the driver's license back.");
-      return;
-    }
-    if (!this.document_file_certification) {
-      await this.commonService.presentAlert("Please upload the massage certification.");
-      return;
-    }
-    if (!this.document_file_insurance) {
-      await this.commonService.presentAlert("Please upload the massage insurance.");
+
+    this.uploadInProgress = true;
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("key", fileType);
+    formData.append("user_id", this.user_detail.id);
+    const uploadUrl = "https://backend.luxetouch.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
+    const req = this.http.post(uploadUrl, formData, {
+      reportProgress: true, // Enable progress events
+      observe: 'events' // Receive events to handle progress
+    });
+
+    req.subscribe((event: any) => {
+      if (event.type === HttpEventType.UploadProgress) {
+        this.uploadProgress = Math.round((100 * event.loaded) / event.total);
+        // Update progress bar or show progress indicator
+        console.log(`File is ${this.uploadProgress}% uploaded.`);
+        // You can update your progress bar here
+      } else if (event.type === HttpEventType.Response) {
+        // Upload completed successfully
+        const res: any = event.body;
+        // Handle response and update UI accordingly
+        if (fileType == 'license_front') {
+          this.backgroundCheckForm.patchValue({
+            FrontLicanceImage: res.file_url,
+          });
+          this.frontLicanceImage = res.file_url;
+        } else if (fileType == 'license_back') {
+          this.backgroundCheckForm.patchValue({
+            BackLicanceImage: res.file_url,
+          });
+          this.backLicanceImage = res.file_url;
+        } else if (fileType == 'massage_certification') {
+          this.backgroundCheckForm.patchValue({
+            MassageCertification: res.file_url,
+          });
+          this.massageCertification = res.file_url;
+        } else if (fileType == 'massage_insurance') {
+          this.backgroundCheckForm.patchValue({
+            MassageInsurance: res.file_url,
+          });
+          this.massageInsurance = res.file_url;
+        }
+        this.uploadingFileType = "";
+        if (!this.backgroundCheckForm.valid) {
+          this.submitDisabled = true;
+        } else {
+          this.submitDisabled = false;
+        }
+      }
+    }, (error: any) => {
+      this.uploadingFileType = "";
+      this.commonService.dismissLoading();
+      if (error.error.message) {
+        this.commonService.presentAlert(error.error.message);
+      }
+    }).add(() => {
+      this.uploadProgress = 0;
+      this.uploadInProgress = false; // Hide progress indicator when upload completes or errors
+    });;
+
+  }
+
+
+  async onSubmit() {
+    if (!this.backgroundCheckForm.valid) {
+      this.isSubmit = true;
       return;
     }
     await this.commonService.showLoader();
