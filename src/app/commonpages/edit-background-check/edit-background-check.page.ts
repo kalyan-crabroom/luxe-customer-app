@@ -190,7 +190,7 @@ this.editBackgroundCheckForm = this.fb.group({
      formData.append("key", fileType);
      formData.append("user_id", this.logUser.id);
  
-     const uploadUrl = "https://backend.luxetouch.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
+     const uploadUrl = "https://bhaveshd.sg-host.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
  
      const req = this.http.post(uploadUrl, formData, {
          reportProgress: true, // Enable progress events

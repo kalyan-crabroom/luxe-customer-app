@@ -240,7 +240,7 @@ export class BackgroundCheckPage implements OnInit {
     formData.append("image", file);
     formData.append("key", fileType);
     formData.append("user_id", this.user_detail.id);
-    const uploadUrl = "https://backend.luxetouch.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
+    const uploadUrl = "https://bhaveshd.sg-host.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
     const req = this.http.post(uploadUrl, formData, {
       reportProgress: true, // Enable progress events
       observe: 'events' // Receive events to handle progress

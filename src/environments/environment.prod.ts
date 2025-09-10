@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  SITE_URL: 'https://backend.luxetouch.com/',
-  API_URL: 'https://backend.luxetouch.com/api/v1/auth/',
-  API_URL2: 'https://backend.luxetouch.com/api/v1/',
+  SITE_URL: 'https://bhaveshd.sg-host.com/',
+  API_URL: 'https://bhaveshd.sg-host.com/api/v1/auth/',
+  API_URL2: 'https://bhaveshd.sg-host.com/api/v1/',
   firebaseConfig: {
     apiKey: "AIzaSyD9FIJEiDGkULI766Ze8RUXcmhefVKMLG4",
     authDomain: "luxe-touch.firebaseapp.com",
