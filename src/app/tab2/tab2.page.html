@@ -37,8 +37,8 @@
               <div class="thumbnail-custom">
                 <img alt="" class="pic" [src]="item.user_image"
                   onerror="this.src='/assets/images/image-store-placeholder-logo.png'" />
-                  <ion-icon 
-                  class="gender-icon"  
+                  <ion-icon
+                  class="gender-icon"
                   [ngStyle]="{
                     'transform': item.gender === 'Male' ? 'rotate(218deg)' : 'rotate(0deg)',
                     'transition': 'transform 0.3s ease'
@@ -115,7 +115,7 @@
               </ion-avatar>
 
               <ion-avatar slot="start" *ngIf="!item.therapist_info">
-                <img src="https://bhaveshd.sg-host.com/assets/user-placeholder.png" alt="">
+                <img src="https://backend.luxetouch.com/assets/user-placeholder.png" alt="">
               </ion-avatar>
               <ion-label>
                 <p *ngIf="item.therapist_info">{{item?.therapist_info?.name}}</p>

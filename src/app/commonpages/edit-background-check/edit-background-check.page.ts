@@ -93,7 +93,7 @@ this.editBackgroundCheckForm = this.fb.group({
         this.checkInput();
       this.backgroundcheck_details = res.data;
       }, error: (err: any) => {
-    
+
       }
     })
   }
@@ -182,21 +182,21 @@ this.editBackgroundCheckForm = this.fb.group({
        this.commonService.presentAlert('File size exceeds the limit of 10 MB.');
        this.uploadingFileType = "";
        return;
-     } 
- 
+     }
+
      this.uploadInProgress = true;
      const formData = new FormData();
      formData.append("image", file);
      formData.append("key", fileType);
      formData.append("user_id", this.logUser.id);
- 
-     const uploadUrl = "https://bhaveshd.sg-host.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
- 
+
+     const uploadUrl = "https://backend.luxetouch.com/api/v1/auth/upload-baseimage"; // Replace with your actual upload URL
+
      const req = this.http.post(uploadUrl, formData, {
          reportProgress: true, // Enable progress events
          observe: 'events' // Receive events to handle progress
      });
- 
+
      req.subscribe((event: any) => {
          if (event.type === HttpEventType.UploadProgress) {
            this.uploadProgress = Math.round((100 * event.loaded) / event.total);
@@ -245,7 +245,7 @@ this.editBackgroundCheckForm = this.fb.group({
        this.uploadProgress = 0;
        this.uploadInProgress = false; // Hide progress indicator when upload completes or errors
    });;
- 
+
    }
 
   async onSubmit(){
