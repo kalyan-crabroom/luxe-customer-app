@@ -40,7 +40,25 @@ export class ApiService {
         })
       };
     }
-    return this.http.post(`${environment.API_URL}${endPoint}`, payload, httpOptions).pipe(map((data: any) => { return data; }));
+
+    // Log API request
+    console.log('🌐 API Request:', {
+      method: 'POST',
+      url: `${environment.API_URL}${endPoint}`,
+      payload: payload,
+      headers: httpOptions
+    });
+
+    return this.http.post(`${environment.API_URL}${endPoint}`, payload, httpOptions).pipe(
+      map((data: any) => {
+        // Log API response
+        console.log('✅ API Response:', {
+          url: `${environment.API_URL}${endPoint}`,
+          data: data
+        });
+        return data;
+      })
+    );
   }
 
   send(endPoint: any, payload: any) {
@@ -152,7 +170,7 @@ export class ApiService {
     const geoApiUrlWithParams = `${this.geoApiUrl}?address=${zipcode}&key=AIzaSyB-3a7E9u6sbb5GexwjlNYT7PN7GcHnXrI`;
     return this.http.get<any>(geoApiUrlWithParams).pipe(
       switchMap((geocodeData: any) => {
-        console.log("geocodeData :",geocodeData);
+        console.log("geocodeData :", geocodeData);
         const lat = geocodeData.results[0].geometry.location.lat;
         const lng = geocodeData.results[0].geometry.location.lng;
 

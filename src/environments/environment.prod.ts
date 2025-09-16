@@ -1,5 +1,8 @@
 export const environment = {
   production: true,
+  // SITE_URL: 'http://localhost:8000/',
+  // API_URL: 'http://localhost:8000/api/v1/auth/',
+  // API_URL2: 'http://localhost:8000/api/v1/',
   SITE_URL: 'https://backend.luxetouch.com/',
   API_URL: 'https://backend.luxetouch.com/api/v1/auth/',
   API_URL2: 'https://backend.luxetouch.com/api/v1/',
