@@ -36,6 +36,43 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 // @import "@ionic/angular/css/palettes/dark.system.css";
 
+/* Autofill Detection Styles */
+/* This helps detect when browsers autofill forms */
+@keyframes onAutoFillStart {
+  from {
+    /**/
+  }
+  to {
+    /**/
+  }
+}
+
+@keyframes onAutoFillCancel {
+  from {
+    /**/
+  }
+  to {
+    /**/
+  }
+}
+
+/* Apply animation to inputs to detect autofill */
+input:-webkit-autofill {
+  animation-duration: 0.001s;
+  animation-name: onAutoFillStart;
+}
+
+input:not(:-webkit-autofill) {
+  animation-duration: 0.001s;
+  animation-name: onAutoFillCancel;
+}
+
+/* Ensure autofilled inputs are styled properly */
+ion-input input:-webkit-autofill {
+  -webkit-text-fill-color: var(--ion-color-dark) !important;
+  -webkit-box-shadow: 0 0 0px 1000px var(--ion-color-light) inset !important;
+}
+
 @font-face {
     font-family: M-Black;
     src: url('./assets/fonts/Montserrat-Black.ttf');
