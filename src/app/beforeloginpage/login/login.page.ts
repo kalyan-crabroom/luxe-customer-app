@@ -6,6 +6,7 @@ import { NavController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { CommonService } from 'src/app/services/common.service';
 import { StorageService } from 'src/app/services/storage.service';
+import { SavePassword } from 'capacitor-ios-autofill-save-password';
 
 @Component({
   selector: 'app-login',
@@ -86,6 +87,19 @@ export class LoginPage implements OnInit {
         this.storageService.saveToStorage('deeplyCalm:user', res.data.user);
         // this.commonService.presentToast('Login Successfully !!', 'success');
         this.getHelperText(res.data.user);
+
+        // Save credentials for iOS autofill
+        if (Capacitor.getPlatform() === 'ios') {
+          try {
+            await SavePassword.promptDialog({
+              username: data.email,
+              password: data.password
+            });
+          } catch (error) {
+            console.log('Error saving password:', error);
+          }
+        }
+
         if (this.remember_me) {
           data.remember_me = this.remember_me;
 

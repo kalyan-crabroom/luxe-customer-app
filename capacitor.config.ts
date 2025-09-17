@@ -5,6 +5,10 @@ const config: CapacitorConfig = {
   appId: 'io.deeplycalm.knoxweb',
   appName: 'Luxe Touch',
   webDir: 'www',
+  server: {
+    hostname: 'backend.luxetouch.com',
+    androidScheme: 'https',
+  },
   plugins: {
     PushNotifications: {
       presentationOptions: ["badge", "sound", "alert"],

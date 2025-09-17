@@ -853,3 +853,29 @@ app-contact-us {
         color: gold;
     }
 }
+
+/* Autofill detection CSS */
+@keyframes onAutoFillStart {
+    from { /*empty*/ }
+    to { /*empty*/ }
+}
+
+@keyframes onAutoFillCancel {
+    from { /*empty*/ }
+    to { /*empty*/ }
+}
+
+ion-input:-webkit-autofill {
+    animation-name: onAutoFillStart;
+    animation-duration: 0.001s;
+}
+
+ion-input:not(:-webkit-autofill) {
+    animation-name: onAutoFillCancel;
+    animation-duration: 0.001s;
+}
+
+/* Ensure autofilled inputs have proper styling */
+ion-input.input-has-value {
+    --placeholder-opacity: 0;
+}

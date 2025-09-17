@@ -16,7 +16,7 @@
   
             <ion-item lines="none" class="field mb-5">
               <ion-icon name="mail" slot="start"></ion-icon>
-              <ion-input type="text" placeholder="Enter Email Address" formControlName="email"></ion-input>
+              <ion-input appAutofill type="email" name="email" autocomplete="email" placeholder="Enter Email Address" formControlName="email" required></ion-input>
             </ion-item>
             <ng-container *ngFor="let validation of validation_messages.email">
               <p class="err"
@@ -28,7 +28,7 @@
           <ion-col size="12">
             <ion-item lines="none" class="field mb-0">
               <ion-icon name="lock-closed" slot="start"></ion-icon>
-              <ion-input [type]="passwordType" placeholder="Enter Password" formControlName="password"></ion-input>
+              <ion-input appAutofill [type]="passwordType" name="password" autocomplete="current-password" placeholder="Enter Password" formControlName="password" required></ion-input>
               <ion-icon [name]="passwordIcon" (click)="hideShowPassword()" slot="end" class="eye"></ion-icon>
             </ion-item>
             <ng-container *ngFor="let validation of validation_messages.password">
