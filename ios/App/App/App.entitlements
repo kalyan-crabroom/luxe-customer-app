@@ -4,12 +4,5 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
-	<key>com.apple.developer.associated-domains</key>
-	<array>
-		<string>webcredentials:luxetouchspa.com</string>
-		<string>webcredentials:www.luxetouchspa.com</string>
-	</array>
-	<key>com.apple.developer.web-browser</key>
-	<true/>
 </dict>
 </plist>

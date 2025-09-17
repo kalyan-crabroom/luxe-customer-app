@@ -1,5 +1,5 @@
 <ion-content>
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)" autocomplete="on" name="loginForm" #loginFormRef>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
     <ion-grid class="full-vh table-grid p-0-pwa-login">
       <div  class="w-full ion-padding-horizontal  bg-image banner bg-image-pwa">
         <ion-row>
@@ -16,15 +16,7 @@
   
             <ion-item lines="none" class="field mb-5">
               <ion-icon name="mail" slot="start"></ion-icon>
-              <ion-input 
-                type="email" 
-                placeholder="Enter Email Address" 
-                formControlName="email"
-                autocomplete="username"
-                name="username"
-                id="username"
-                inputmode="email"
-                #emailInput></ion-input>
+              <ion-input type="text" placeholder="Enter Email Address" formControlName="email"></ion-input>
             </ion-item>
             <ng-container *ngFor="let validation of validation_messages.email">
               <p class="err"
@@ -36,14 +28,7 @@
           <ion-col size="12">
             <ion-item lines="none" class="field mb-0">
               <ion-icon name="lock-closed" slot="start"></ion-icon>
-              <ion-input 
-                [type]="passwordType" 
-                placeholder="Enter Password" 
-                formControlName="password"
-                autocomplete="current-password"
-                name="password"
-                id="password"
-                #passwordInput></ion-input>
+              <ion-input [type]="passwordType" placeholder="Enter Password" formControlName="password"></ion-input>
               <ion-icon [name]="passwordIcon" (click)="hideShowPassword()" slot="end" class="eye"></ion-icon>
             </ion-item>
             <ng-container *ngFor="let validation of validation_messages.password">
