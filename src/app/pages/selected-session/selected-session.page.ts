@@ -19,7 +19,8 @@ export class SelectedSessionPage implements OnInit {
   isTipModal: boolean = false;
   paymentMethodList: any = [];
   is_card_ready: boolean = false;
-  amount:any = 0;
+  amount: any = 0;
+  notificationType: any;
 
   bonusTipForm = new FormGroup({
     amount: new FormControl("", Validators.compose([
@@ -47,6 +48,7 @@ export class SelectedSessionPage implements OnInit {
     this.activatedRoute.queryParams.subscribe((params: any) => {
       if (params && params.booking_id) {
         this.bookingId = params.booking_id;
+        this.notificationType = params.notification_type;
         this.storageService.getFromStorage('deeplyCalm:user').then((user: any) => {
           if (user != null) {
             this.logUser = user;
@@ -63,19 +65,26 @@ export class SelectedSessionPage implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   getBookingDetails() {
     this.ready = false;
-    this.apiService.fetchData(`get_bookingdetails?booking_id=${this.bookingId}`, this.logUser.token).subscribe((res:any)=>{
-        this.ready = true;
-        this.bookingDetails = res.bookings;
-        this.cdref.detectChanges();
-    },(err)=>{
-      console.log("err :",err);
+    this.apiService.fetchData(`get_bookingdetails?booking_id=${this.bookingId}`, this.logUser.token).subscribe((res: any) => {
       this.ready = true;
-        this.cdref.detectChanges();
+      this.bookingDetails = res.bookings;
+      this.cdref.detectChanges();
+
+      // Auto-open bonus tip modal if coming from requestPendingRemainder notification
+      if (this.notificationType === 'requestPendingRemainder' && this.bookingDetails?.status == 1) {
+        setTimeout(() => {
+          this.bonusTipModal(this.bookingDetails);
+        }, 500); // Small delay to ensure the page is fully loaded
+      }
+    }, (err) => {
+      console.log("err :", err);
+      this.ready = true;
+      this.cdref.detectChanges();
     });
   }
 

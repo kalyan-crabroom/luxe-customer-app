@@ -140,9 +140,18 @@ export class AppComponent {
           if (data.type === 'newRequestOpportunity') {
             // Navigate to notifications screen for newRequestOpportunity
             this.router.navigate(['/tabs/notifications']);
+          } else if (data.type === 'requestPendingRemainder') {
+            const navigationExtras: NavigationExtras = {
+              queryParams: {
+                booking_id: data.booking_id,
+                notification_type: data.type
+              }
+            };
+            console.log('Navigation Extras:', navigationExtras);
+            this.router.navigate(['/selected-session'], navigationExtras);
           } else if (data.type === 'requestAccepted' || data.type === 'completedRequest' || data.type === ' cancellation' || data.type === 'report' ||
             data.tyoe == 'reminder' || data.type == 'requestPending' || data.type == 'sessionReminder'
-            || data.type == 'sessionStart' || data.type == 'sessionStart' || data.type == "requestPendingRemainder" || data.type == "cancelledRequest"
+            || data.type == 'sessionStart' || data.type == 'sessionStart' || data.type == "cancelledRequest"
           ) {
             const navigationExtras: NavigationExtras = {
               queryParams: {
