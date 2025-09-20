@@ -24,6 +24,12 @@
           <ion-icon name="location" slot="start"></ion-icon>
           <ion-input type="text" formControlName="location_address" placeholder="Location Address"></ion-input>
         </ion-item>
+        <ng-container *ngFor="let validation of validation_messages.location_address">
+          <p class="err"
+            *ngIf="addNewLocation.get('location_address')?.hasError(validation.type) && (addNewLocation.get('location_address')?.dirty || addNewLocation.get('location_address')?.touched)">
+            <ion-icon name="information-circle-outline"></ion-icon>{{validation.message}}
+          </p>
+        </ng-container>
       </ion-col>
 
       <ion-col size="12">

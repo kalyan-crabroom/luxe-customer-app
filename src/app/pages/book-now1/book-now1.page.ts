@@ -1,5 +1,5 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { CommonService } from 'src/app/services/common.service';
@@ -25,6 +25,32 @@ export class BookNow1Page implements OnInit {
   locationId: any
   service = new google.maps.places.AutocompleteService();
 
+  // Custom validator for street addresses
+  static streetAddressValidator(control: AbstractControl): ValidationErrors | null {
+    if (!control.value) return null;
+
+    const value = control.value.trim();
+
+    // Check if the address contains a street number (starts with digits)
+    const hasStreetNumber = /^\d+/.test(value);
+
+    // Check if it contains common street address indicators
+    const hasStreetIndicators = /\b(st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|ct|court|pl|place|way|cir|circle)\b/i.test(value);
+
+    // Check if it's just a city name (common patterns to reject)
+    const isJustCity = /^[A-Za-z\s,]+$/.test(value) && !hasStreetNumber && !hasStreetIndicators && value.split(',').length <= 2;
+
+    if (!hasStreetNumber && !hasStreetIndicators) {
+      return { invalidStreetAddress: true };
+    }
+
+    if (isJustCity) {
+      return { cityNotAllowed: true };
+    }
+
+    return null;
+  }
+
   validation_messages = {
     location_name: [
       { type: 'required', message: "This Field is required." },
@@ -32,7 +58,9 @@ export class BookNow1Page implements OnInit {
     ],
     location_address: [
       { type: 'required', message: "This Field is required." },
-      { type: "pattern", message: "Only alphabets are allowed" }
+      { type: "pattern", message: "Only alphabets are allowed" },
+      { type: "invalidStreetAddress", message: "Please enter a complete street address with street number and street name." },
+      { type: "cityNotAllowed", message: "City names are not allowed. Please enter a complete street address." }
     ],
     location_type: [
       // { type: 'required', message: "This Field is required." },
@@ -69,7 +97,7 @@ export class BookNow1Page implements OnInit {
   ) {
     this.bookNow1 = new FormGroup({
       location_name: new FormControl(''),//[Validators.required, Validators.pattern(/^\s*\S.*\S\s*$/)]
-      location_address: new FormControl('', [Validators.required, Validators.pattern(/^\s*\S.*\S\s*$/)]),
+      location_address: new FormControl('', [Validators.required, Validators.pattern(/^\s*\S.*\S\s*$/), BookNow1Page.streetAddressValidator]),
       // location_type: new FormControl('', Validators.pattern(/^\s*\S.*\S\s*$/)),
       location_type: new FormControl(''),
       // parking_directions: new FormControl('', [Validators.pattern(/^\s*\S.*\S\s*$/)]),
@@ -247,18 +275,35 @@ export class BookNow1Page implements OnInit {
     let self = this;
     this.service.getPlacePredictions({
       input: this.address,
-      // types:['establishment'],
+      types: ['address'], // Filter for addresses only, not establishments
+      componentRestrictions: { country: 'us' } // Restrict to US addresses
     }, (predictions: any, status: any) => {
       self.allLocations = [];
       self.zone.run(() => {
         if (predictions != null) {
           predictions.forEach((prediction: any) => {
-            // console.log("prediction :", prediction);
-            self.allLocations.push(prediction.description);
+            // Additional filtering to ensure it's a street address
+            if (self.isValidStreetAddress(prediction.description)) {
+              self.allLocations.push(prediction.description);
+            }
           });
         }
       });
     })
+  }
+
+  // Helper method to validate if the prediction is a valid street address
+  isValidStreetAddress(address: string): boolean {
+    // Check if it contains a street number
+    const hasStreetNumber = /^\d+/.test(address);
+
+    // Check if it contains street indicators
+    const hasStreetIndicators = /\b(st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|ct|court|pl|place|way|cir|circle)\b/i.test(address);
+
+    // Reject if it's just a city name or business name without street info
+    const isJustCityOrBusiness = !hasStreetNumber && !hasStreetIndicators;
+
+    return !isJustCityOrBusiness;
   }
 
   chooseLocation(item: any) {
