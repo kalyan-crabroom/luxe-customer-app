@@ -21,8 +21,7 @@
 
   <ion-list class="ion-padding">
 
-    <ion-list-header class="ion-no-padding">
-      <ion-label class="ion-no-margin">Notifications</ion-label>
+    <ion-list-header class="ion-no-padding" style="margin-top: -10px; display: flex; justify-content: flex-end; flex-direction: row-reverse;">
       <ion-button class="ion-no-margin" (click)="clearAllAlert()" *ngIf="notificationData && notificationData.length > 0">Clear All</ion-button>
     </ion-list-header>
     
