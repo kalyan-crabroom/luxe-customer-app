@@ -137,8 +137,11 @@ export class AppComponent {
         const data = notification.notification.data;
         if (data) {
           console.log('dataApp', data);
-          if (data.type === 'requestAccepted' || data.type === 'completedRequest' || data.type === ' cancellation' || data.type === 'report' ||
-            data.tyoe == 'reminder' || data.type == 'newRequestOpportunity' || data.type == 'requestPending' || data.type == 'sessionReminder'
+          if (data.type === 'newRequestOpportunity') {
+            // Navigate to notifications screen for newRequestOpportunity
+            this.router.navigate(['/tabs/notifications']);
+          } else if (data.type === 'requestAccepted' || data.type === 'completedRequest' || data.type === ' cancellation' || data.type === 'report' ||
+            data.tyoe == 'reminder' || data.type == 'requestPending' || data.type == 'sessionReminder'
             || data.type == 'sessionStart' || data.type == 'sessionStart' || data.type == "requestPendingRemainder" || data.type == "cancelledRequest"
           ) {
             const navigationExtras: NavigationExtras = {
